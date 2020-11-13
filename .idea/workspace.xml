@@ -2,21 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="ed6b59fb-8e45-4969-b8a1-5a92d1cf03c6" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/out/production/MrJackPocket/com/company/Action.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/out/production/MrJackPocket/com/company/Alibi.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/out/production/MrJackPocket/com/company/Detectives.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/out/production/MrJackPocket/com/company/District.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/out/production/MrJackPocket/com/company/MrJack.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/out/production/MrJackPocket/com/company/MrJackPocket.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/out/production/MrJackPocket/com/company/Player.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/MrJackPocket/com/company/Main.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/MrJackPocket/com/company/Main.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/company/Board.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/company/Detectives.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/company/Detectives.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/company/District.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/company/District.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/company/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/company/Main.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/company/MrJack.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/company/MrJack.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/company/MrJackPocket.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/company/MrJackPocket.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/company/Action.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/company/Action.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -56,6 +43,17 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <configuration default="true" type="ArquillianJUnit" factoryName="" nameIsGenerated="true">
+      <option name="arquillianRunConfiguration">
+        <value>
+          <option name="containerStateName" value="" />
+        </value>
+      </option>
+      <option name="TEST_OBJECT" value="class" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <recent_temporary>
       <list>
         <item itemvalue="Application.Main" />
@@ -78,20 +76,37 @@
       <workItem from="1605280940423" duration="94000" />
       <workItem from="1605281056855" duration="631000" />
     </task>
+    <task id="LOCAL-00001" summary="change Action">
+      <created>1605284180880</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1605284180880</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
   </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="change Action" />
+    <option name="LAST_COMMIT_MESSAGE" value="change Action" />
+  </component>
   <component name="WindowStateProjectService">
-    <state x="574" y="128" key="#com.intellij.ide.util.MemberChooser" timestamp="1605281008884">
-      <screen x="0" y="0" width="1536" height="824" />
+    <state x="478" y="106" key="#com.intellij.ide.util.MemberChooser" timestamp="1605285044337">
+      <screen x="0" y="0" width="1280" height="680" />
     </state>
+    <state x="478" y="106" key="#com.intellij.ide.util.MemberChooser/0.0.1280.680@0.0.1280.680" timestamp="1605285044337" />
     <state x="574" y="128" key="#com.intellij.ide.util.MemberChooser/0.0.1536.824@0.0.1536.824" timestamp="1605281008884" />
     <state x="499" y="159" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog" timestamp="1605278809190">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state x="499" y="159" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog/0.0.1536.824@0.0.1536.824" timestamp="1605278809190" />
+    <state x="264" y="0" key="CommitChangelistDialog2" timestamp="1605284179923">
+      <screen x="0" y="0" width="1280" height="680" />
+    </state>
+    <state x="264" y="0" key="CommitChangelistDialog2/0.0.1280.680@0.0.1280.680" timestamp="1605284179923" />
     <state x="549" y="167" key="FileChooserDialogImpl" timestamp="1605281032743">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
@@ -112,9 +127,14 @@
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state width="1493" height="210" key="GridCell.Tab.0.right/0.0.1536.824@0.0.1536.824" timestamp="1605280805432" />
-    <state x="586" y="326" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1605275769826">
-      <screen x="0" y="0" width="1536" height="824" />
+    <state x="233" y="74" key="Vcs.Push.Dialog.v2" timestamp="1605284348863">
+      <screen x="0" y="0" width="1280" height="680" />
     </state>
+    <state x="233" y="74" key="Vcs.Push.Dialog.v2/0.0.1280.680@0.0.1280.680" timestamp="1605284348863" />
+    <state x="488" y="269" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1605283953281">
+      <screen x="0" y="0" width="1280" height="680" />
+    </state>
+    <state x="488" y="269" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/0.0.1280.680@0.0.1280.680" timestamp="1605283953281" />
     <state x="586" y="326" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/0.0.1536.824@0.0.1536.824" timestamp="1605275769826" />
   </component>
 </project>
