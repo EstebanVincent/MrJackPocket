@@ -5,4 +5,5 @@ public class Detectives extends Player{
     public String Watson;
     public String Toby;
 
+
 }
