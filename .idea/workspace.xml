@@ -1,16 +1,36 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="ed6b59fb-8e45-4969-b8a1-5a92d1cf03c6" name="Default Changelist" comment="" />
+    <list default="true" id="ed6b59fb-8e45-4969-b8a1-5a92d1cf03c6" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/src/com/company/Action.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/com/company/Alibi.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/com/company/Board.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/com/company/Detectives.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/com/company/District.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/com/company/MrJack.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/com/company/MrJackPocket.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/com/company/Player.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Class" />
+      </list>
+    </option>
+  </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="ProjectId" id="1jy0vspHrXi19AbMfzDAfx7B4nP" />
+  <component name="ProjectLevelVcsManager">
+    <ConfirmationsSetting value="2" id="Add" />
+  </component>
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
@@ -30,17 +50,6 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration default="true" type="ArquillianJUnit" factoryName="" nameIsGenerated="true">
-      <option name="arquillianRunConfiguration">
-        <value>
-          <option name="containerStateName" value="" />
-        </value>
-      </option>
-      <option name="TEST_OBJECT" value="class" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
     <recent_temporary>
       <list>
         <item itemvalue="Application.Main" />
@@ -56,6 +65,7 @@
       <option name="presentableId" value="Default" />
       <updated>1604761258233</updated>
       <workItem from="1604761259429" duration="498000" />
+      <workItem from="1605274389871" duration="1566000" />
     </task>
     <servers />
   </component>
