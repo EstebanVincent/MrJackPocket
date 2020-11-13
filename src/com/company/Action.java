@@ -44,14 +44,14 @@ public class Action {
     }
 
     public void Holmes(){
-
+        //bouge dans le sens des aiguille d'une montre de 1 ou 2 case
     }
 
     public void Watson(){
-
+        //bouge dans le sens des aiguille d'une montre de 1 ou 2 case
     }
 
-    public void Dogs(){
-
+    public void Toby(){
+        //bouge dans le sens des aiguille d'une montre de 1 ou 2 case
     }
 }
