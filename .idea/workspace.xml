@@ -2,6 +2,13 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="ed6b59fb-8e45-4969-b8a1-5a92d1cf03c6" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/out/production/MrJackPocket/com/company/Action.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/out/production/MrJackPocket/com/company/Alibi.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/out/production/MrJackPocket/com/company/Detectives.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/out/production/MrJackPocket/com/company/District.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/out/production/MrJackPocket/com/company/MrJack.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/out/production/MrJackPocket/com/company/MrJackPocket.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/out/production/MrJackPocket/com/company/Player.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/MrJackPocket/com/company/Main.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/MrJackPocket/com/company/Main.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/com/company/Board.java" beforeDir="false" />
