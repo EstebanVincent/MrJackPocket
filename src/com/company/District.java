@@ -3,7 +3,7 @@ package com.company;
 public class District { //nom en foction du perso dessus
     public String nom;
     public int faceVisible; //1 face suspect 0 face vide
-    public int orientation; //N E S Ouest
+    public int orientation; //N = 0, E = 1, S = 2, Ouest = 3, c'est le bout du T dans cette direction
     public int typeDistrict; //0 case vide, 1 case suspect, 2 case detective
 
     public District(String nom, int orientation, int typeDistrict) {
@@ -35,4 +35,8 @@ public class District { //nom en foction du perso dessus
     public void setTypeDistrict(int typeDistrict) {
         this.typeDistrict = typeDistrict;
     }
+
+    public String getNom() { return nom; }
+
+    public void setNom(String nom) { this.nom = nom; }
 }
