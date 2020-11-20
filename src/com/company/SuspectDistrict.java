@@ -8,7 +8,7 @@ public class SuspectDistrict extends District{
     }
 
 
-
+/*
 
     public int[] see(District district){
         int[] a = new int[2];
@@ -17,6 +17,8 @@ public class SuspectDistrict extends District{
         if (district == JL){
             return {2,2,2,2};
         }
+
+ */
 /*
         if orientation = nord
         in[] a = new int[]
@@ -26,11 +28,11 @@ public class SuspectDistrict extends District{
             a[0] = par le ouest seeTrough
 
 
- */
+
 
     }
 
-        
+      */
     public int seeTrough(){//2 si on peut voir a travers, 1 si on peu voir le perso, 0 si on voit pas
 
         return 1;

@@ -10,7 +10,7 @@ public class District { //nom en foction du perso dessus
     public int faceVisible; //1 face suspect 0 face vide
     public int orientation; //N = 0, E = 1, S = 2, Ouest = 3, c'est le bout du T dans cette direction
     public int typeDistrict; //0 case vide, 1 case suspect, 2 case detective
-    public District[][] baseDeDonnee;
+    public District[][] baseDeDonnee; //ne pas modifier !!!!!!!!!!
 
     public District(String nom, int orientation, int typeDistrict,int faceVisible) {
         this.nom = nom;
@@ -18,6 +18,13 @@ public class District { //nom en foction du perso dessus
         this.typeDistrict = typeDistrict;
         this.faceVisible = faceVisible;
     }
+
+    public District(){ }
+
+
+
+
+
 
     public District[][] getBaseDeDonnee() { return baseDeDonnee; }
 
@@ -104,6 +111,7 @@ public class District { //nom en foction du perso dessus
 
             }
         }
+        System.out.println(bdd[0][1]);
         setBaseDeDonnee(bdd);
     }
 }
