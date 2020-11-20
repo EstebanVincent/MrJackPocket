@@ -1,7 +1,23 @@
 package com.company;
 
 public class Alibi {
-    public int alibi; //1 à 9
+    public String alibi; //j'ai changer en String c'est mieux avec des nom pour les cartes
     public int sablier; //0 à 2
 
+    public Alibi(String alibi, int sablier) {
+        this.alibi = alibi;
+        this.sablier = sablier;
+    }
+
+    private void initialiseAlibi(){
+        Alibi Mme = new Alibi("Madame",2);
+        Alibi SGT = new Alibi("SGT Goodley",0);
+        Alibi JB = new Alibi("Jeremy Bert",1);
+        Alibi WG = new Alibi("William Gull",1);
+        Alibi Ms = new Alibi("Miss Stealthy",1);
+        Alibi JS = new Alibi("John Smith",1);
+        Alibi Insp = new Alibi("Insp. Lestrade",0);
+        Alibi JP = new Alibi("John Piser",1);
+        Alibi JL = new Alibi("Joseph Layne",1);
+    }
 }

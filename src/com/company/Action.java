@@ -1,32 +1,36 @@
 package com.company;
 
 import javax.swing.plaf.basic.BasicInternalFrameTitlePane;
+import java.util.Random;
 
 public class Action {
-    public String jeton1;
-    public String jeton2;
-    public String jeton3;
-    public String jeton4;
-    public int face; // recto et verso en binaire 0 et 1
+    public int jeton; // les jetons de 1 à 4
+    public boolean face; // boolean : recto = true et verso = false
     public Alibi alibi; // objet Alibi
     public Detectives Holmes;
     public Detectives Toby;
     public Detectives Watson; // objets Detectives pour les methodes
+    public District district;
 
-    public Action(String jeton1, String jeton2, String jeton3, String jeton4, int face, Alibi alibi, Detectives holmes, Detectives toby, Detectives watson) {
-        this.jeton1 = jeton1;
-        this.jeton2 = jeton2;
-        this.jeton3 = jeton3;
-        this.jeton4 = jeton4;
-        this.face = face; // tous les constructeur pour l'instant j'ai tout mis
-        this.alibi = alibi;
-        Holmes = holmes;
-        Toby = toby;
-        Watson = watson;
+    public Action(int jeton, boolean face) {
+        this.jeton = jeton;
+        this.face = face;
+    }
+
+    public void initialiseJeton(){
+        Action getAlibi = new Action(1,true);
+        Action Holmes = new Action(1,false);
+        Action Toby = new Action(2,true);
+        Action Watson = new Action(2,false);
+        Action Rotation1 = new Action(3,true);
+        Action Exchange = new Action(3,false);
+        Action Rotation2 = new Action(4, true);
+        Action Joker = new Action(4,false);
     }
 
     public Alibi getAlibi(){
-        return alibi; //un get pour la carte ?
+        Random random = new Random();
+        return ;
     }
 
     public void Exchange(){
@@ -37,6 +41,8 @@ public class Action {
 
     public void Rotation(){
         // rotate selected piece
+        // select district
+        district.orientation = (district.orientation + 1)%4;
     }
 
     public void Joker(){
