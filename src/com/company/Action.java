@@ -1,6 +1,7 @@
 package com.company;
 
 import javax.swing.plaf.basic.BasicInternalFrameTitlePane;
+import java.util.Random;
 
 public class Action {
     public int jeton; // les jetons de 1 à 4
@@ -28,7 +29,8 @@ public class Action {
     }
 
     public Alibi getAlibi(){
-        return alibi; //un get pour la carte ?
+        Random random = new Random();
+        return ;
     }
 
     public void Exchange(){
