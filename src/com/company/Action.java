@@ -27,11 +27,13 @@ public class Action {
         Action Rotation2 = new Action(4, true);
         Action Joker = new Action(4,false);
     }
-
+/*
     public Alibi getAlibi(){
         Random random = new Random();
         return ;
     }
+
+ */
 
     public void Exchange(){
         // selected piece.board = other selected piece.board

@@ -111,7 +111,6 @@ public class District { //nom en foction du perso dessus
 
             }
         }
-        System.out.println(bdd[0][1]);
         setBaseDeDonnee(bdd);
     }
 }
