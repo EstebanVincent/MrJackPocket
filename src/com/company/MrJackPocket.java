@@ -50,23 +50,23 @@ public class MrJackPocket {
         }
 
         //on créer les district
-        District Mme = new District("Madame",orienté[0],1);
-        District SGT = new District("SGT Goodley",orienté[1],1);
-        District JB = new District("Jeremy Bert",orienté[2],1);
-        District WG = new District("William Gull",orienté[3],1);
-        District Ms = new District("Miss Stealthy",orienté[4],1);
-        District Gs = new District("Gensmith",orienté[5],1);
-        District Insp = new District("Insp. Lestrade",orienté[6],1);
-        District JP = new District("John Piser",orienté[7],1);
-        District JL = new District("Joseph Layne",orienté[8],1);
+        District Mme = new District("Madame",orienté[0],1,1);
+        District SGT = new District("SGT Goodley",orienté[1],1,1);
+        District JB = new District("Jeremy Bert",orienté[2],1,1);
+        District WG = new District("William Gull",orienté[3],1,1);
+        District Ms = new District("Miss Stealthy",orienté[4],1,1);
+        District Gs = new District("Gensmith",orienté[5],1,1);
+        District Insp = new District("Insp. Lestrade",orienté[6],1,1);
+        District JP = new District("John Piser",orienté[7],1,1);
+        District JL = new District("Joseph Lane",orienté[8],1,1); // spécial si retournéé croix preciser dans suspect district
 
         //des district speciaux avec les inspecteurs dessus, regles diff
-        District Holmes = new District("Holmes",1,2);
-        District Watson = new District("Watson",1,2);
-        District Toby = new District("Toby",1,2);
+        District Holmes = new District("Holmes",1,2,1);
+        District Watson = new District("Watson",1,2,1);
+        District Toby = new District("Toby",1,2,1);
 
         //districtes juste case ou y'as rien
-        District Vide = new District("Vide",1,0);
+        District Vide = new District("Vide",1,0,1);
 
         //création du board en lui meme
         District[][] board = new District[5][5];
