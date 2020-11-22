@@ -80,8 +80,9 @@ public class Alibi {
     public Alibi choixJack(){ // renvoi qui est mrJack et update la pioche
         Random random = new Random();
         int rand = random.nextInt(8 - 0 + 1);
+        Alibi tempo = piocheAlibi[rand]; //valeur tempo car sinon indexOutofBounds avec le update
         updatePiocheAlibi(piocheAlibi[rand]);
-        return piocheAlibi[rand];
+        return tempo;
     }
 
     public Alibi draw1Carte(){

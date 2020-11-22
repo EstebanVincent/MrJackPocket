@@ -1,6 +1,8 @@
 package com.company;
 
 import javax.swing.plaf.basic.BasicInternalFrameTitlePane;
+import javax.xml.bind.SchemaOutputResolver;
+import java.util.Arrays;
 import java.util.Random;
 import java.util.Scanner;
 
@@ -13,13 +15,61 @@ public class Action {
     public String verso;
 
     public Action[] jetons; // les jetons de 1 à 4 avec leur faces
-
-    public boolean face; // boolean : recto = true et verso = false
+    public String[] actionsPossible;
+    public String[] actionsPossibleRetournée;
 
     public Action(int jeton, String recto, String verso) {
         this.jeton = jeton;
         this.recto = recto;
         this.verso = verso;
+    }
+
+    public String getRecto() {
+        return recto;
+    }
+
+    public String getVerso() {
+        return verso;
+    }
+
+    public int getJeton() {
+        return jeton;
+    }
+
+    public void setJeton(int jeton) {
+        this.jeton = jeton;
+    }
+
+    public void setRecto(String recto) {
+        this.recto = recto;
+    }
+
+    public void setVerso(String verso) {
+        this.verso = verso;
+    }
+
+    public Action[] getJetons() {
+        return jetons;
+    }
+
+    public void setJetons(Action[] jetons) {
+        this.jetons = jetons;
+    }
+
+    public String[] getActionsPossible() {
+        return actionsPossible;
+    }
+
+    public void setActionsPossible(String[] actionsPossible) {
+        this.actionsPossible = actionsPossible;
+    }
+
+    public String[] getActionsPossibleRetournée() {
+        return actionsPossibleRetournée;
+    }
+
+    public void setActionsPossibleRetournée(String[] actionsPossibleRetournée) {
+        this.actionsPossibleRetournée = actionsPossibleRetournée;
     }
 
     //permet de transferé la valeur des atributs de mrjack a action
@@ -146,5 +196,72 @@ public class Action {
         Scanner scanner = new Scanner(System.in);
         String deplacement = scanner.nextLine();
         int a = Integer.valueOf(deplacement);
+    }
+
+    public void initialisePossibleAction(){// change list de string des action possible aux 2 prochains tours
+        Random rd = new Random();
+        boolean[] faceAction= new boolean[4];
+        String[] sortieEnqueteur = new String[0];
+        String[] sortieJack = new String[0];
+        for (int i = 0; i < faceAction.length; i++) {
+            faceAction[i] = rd.nextBoolean();
+            sortieEnqueteur = Arrays.copyOf(sortieEnqueteur, sortieEnqueteur.length + 1);// on crée une copie qui ecrase l'originale et qui est plus longue de 1 (append en python)
+            sortieJack = Arrays.copyOf(sortieJack, sortieJack.length + 1);
+            if (faceAction[i]){
+                sortieEnqueteur[sortieEnqueteur.length - 1] =jetons[i].getRecto();
+                sortieJack[sortieJack.length - 1] =jetons[i].getVerso();
+            } else {
+                sortieEnqueteur[sortieEnqueteur.length - 1] =jetons[i].getVerso();
+                sortieJack[sortieJack.length - 1] =jetons[i].getRecto();
+            }
+        }
+        actionsPossible = sortieEnqueteur;
+        actionsPossibleRetournée = sortieJack;
+    }
+
+    public void printActionPossible(){
+        System.out.println();
+        for (int i = 0; i < actionsPossible.length-1; i++){
+            System.out.print(actionsPossible[i] + "\t");
+        }
+        System.out.println(actionsPossible[actionsPossible.length-1]);
+    }
+
+    public void printActionPossibleRetournée(){
+        System.out.println();
+        for (int i = 0; i < actionsPossibleRetournée.length-1; i++){
+            System.out.print(actionsPossibleRetournée[i] + "\t");
+        }
+        System.out.println(actionsPossibleRetournée[actionsPossibleRetournée.length-1]);
+    }
+
+    public void updateActionPossible(String actionUtilisé){
+        String[] newPioche = new String[0];
+        for(int i = 0; i < actionsPossible.length; i++){
+            if(actionsPossible[i] != actionUtilisé){
+                newPioche = Arrays.copyOf(newPioche, newPioche.length + 1);// append en python
+                newPioche[newPioche.length - 1] = actionsPossible[i];
+            }
+        }
+        setActionsPossible(newPioche);
+    }
+
+    public void updateActionPossibleRetournée(String actionUtilisé){
+        String[] newPioche = new String[0];
+        for(int i = 0; i < actionsPossibleRetournée.length; i++){
+            if(actionsPossibleRetournée[i] != actionUtilisé){
+                newPioche = Arrays.copyOf(newPioche, newPioche.length + 1);// append en python
+                newPioche[newPioche.length - 1] = actionsPossibleRetournée[i];
+            }
+        }
+        setActionsPossibleRetournée(newPioche);
+    }
+
+    public String chooseAction(){
+        System.out.println();
+        System.out.println("Quelle action choisi-tu ?");
+        Scanner scanner = new Scanner(System.in);
+        String actionChoisi = scanner.nextLine();
+        return actionChoisi;
     }
 }

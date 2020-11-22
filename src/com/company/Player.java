@@ -18,7 +18,9 @@ public class Player {
     }
     public Player() { }
 
-    MrJackPocket mrJackPocket = new MrJackPocket(this);
+
+    //MrJackPocket mrJackPocket = new MrJackPocket(this);
+
 
     public void initialiseName(){
         Player jack = new Player("Mr. Jack");

@@ -16,22 +16,64 @@ public class MrJackPocket {
 
     }
 
+    Action action = new Action(this);
+    SuspectDistrict sus = new SuspectDistrict(this); //permet de transferé la valeur des atributs de mrjack a suspectDis
+    Player player = new Player();
+    Alibi alibi = new Alibi();
 
 
-    public void play(){
+    public void play(){//les actions possible ne d'updatesPas probleme d'opp
         débutPartie();
+        printBoard();
         for (int i = 1; i < 9; i++ ) {//i est le compteur de tour
             if (i % 2 == 1){ // tour impair, enqueteurs commence
+                action.initialisePossibleAction();
+                action.printActionPossible();
+                String act1 = action.chooseAction(); //ajouter un verif que c possible avec do while
+                action.updateActionPossible(act1);
+
+
+                action.printActionPossible();
+                String act2 = action.chooseAction(); //ajouter un verif que c possible avec do while
+                action.updateActionPossible(act2);
+
+                action.printActionPossible();
+                String act3 = action.chooseAction(); //ajouter un verif que c possible avec do while
+                action.updateActionPossible(act3);
+
+
+                action.printActionPossible();
+                String act4 = action.actionsPossible[0]; //ajouter un verif que c possible avec do while
+
 
             } else { // tour pair Jack commence
+                action.printActionPossibleRetournée();
+                String act1 = action.chooseAction(); //ajouter un verif que c possible avec do while
+                action.updateActionPossibleRetournée(act1);
+
+
+                action.printActionPossible();
+                String act2 = action.chooseAction(); //ajouter un verif que c possible avec do while
+                action.updateActionPossibleRetournée(act2);
+
+                action.printActionPossible();
+                String act3 = action.chooseAction(); //ajouter un verif que c possible avec do while
+                action.updateActionPossibleRetournée(act3);
+
+
+                action.printActionPossible();
+                String act4 = action.actionsPossibleRetournée[0]; //ajouter un verif que c possible avec do while
 
             }
+
+
         }
-
-
-        SuspectDistrict sus = new SuspectDistrict(this); //permet de transferé la valeur des atributs de mrjack a suspectDis
-        Action action = new Action(this);
     }
+
+
+
+
+
 
 
 
@@ -65,11 +107,15 @@ public class MrJackPocket {
     public void setCurrentPlayer(Player currentPlayer) { this.currentPlayer = currentPlayer; }
 
 
+
+    /*
     //permet de transferé la valeur des atributs de player a mrjack
     private Player player;
     public MrJackPocket(Player player) {
         this.player = player;
     }
+
+     */
 
     public void débutPartie(){
         //lance la game behind the scene, initialise le plateau, les joueurs, choisi Jack
@@ -77,13 +123,14 @@ public class MrJackPocket {
 
         player.initialiseName();
         setCurrentPlayer(player.players[1]); //enqueteur commence
-
-        Alibi alibi = new Alibi();
-
         alibi.initialisePiocheAlibi();//on crée la pioche
+
         Alibi alibiJack = alibi.choixJack(); //alibiJack est la carte alibi de Jack, et la pioche est update
         String jack = alibiJack.getNom(); //jack est le nom en string de son perso
         alibi.initialiseAlibiJack(alibiJack); //on initialise les carte alibi en possession de Jack
+
+        action.initialiseJetons();
+
     }
 
 
