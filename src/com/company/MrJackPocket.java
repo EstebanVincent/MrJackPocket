@@ -17,6 +17,7 @@ public class MrJackPocket {
     public void play(){
         initialiseBoard();
         printBoard();
+        SuspectDistrict sus =new SuspectDistrict(this); //permet de transferé la valeur des atributs de mrjack a suspectDis
     }
 
     public District[][] getBoard() {
