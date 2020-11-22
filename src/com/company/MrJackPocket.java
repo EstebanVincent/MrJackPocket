@@ -17,9 +17,11 @@ public class MrJackPocket {
 
 
     public void play(){
-        initialiseBoard();
-        printBoard();
-        SuspectDistrict sus =new SuspectDistrict(this); //permet de transferé la valeur des atributs de mrjack a suspectDis
+        débutPartie();
+
+
+
+        SuspectDistrict sus = new SuspectDistrict(this); //permet de transferé la valeur des atributs de mrjack a suspectDis
     }
 
     public District[][] getBoard() {
@@ -44,6 +46,20 @@ public class MrJackPocket {
 
     public void setTemps(int[] temps) {
         this.temps = temps;
+    }
+
+
+    public void débutPartie(){
+        //lance la game behind the scene, initialise le plateau, choisi Jack
+        initialiseBoard();
+
+        Alibi alibi = new Alibi();
+
+        alibi.initialisePiocheAlibi();//on crée la pioche
+        Alibi alibiJack = alibi.choixJack(); //alibiJack est la carte alibi de Jack
+        String jack = alibiJack.getNom(); //jack est le nom en string de son perso
+        alibi.updatePiocheAlibi(alibiJack); //la pioche ne comprend plus mrJack
+        alibi.initialiseAlibiJack(alibiJack); //on initialise les carte alibi en possession de Jack
     }
 
 
@@ -87,6 +103,11 @@ public class MrJackPocket {
                 a = a+1; //passe au prochain perso
             }
         }
+        //on fait en sorte que les inspecteurs soient en face d'un mur
+        board[1][1].setOrientation(1);
+        board[1][3].setOrientation(3);
+        board[3][2].setOrientation(0);
+
         setBoard(board); //on set la valeur de board locale à celle de la classe
     }
 
