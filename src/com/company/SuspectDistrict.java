@@ -23,7 +23,7 @@ public class SuspectDistrict extends District{
         //N = 0, E = 1, S = 2, Ouest = 3
         //en entree les coordonnee en string ex : 12, 22, et dir du regard en int
         String[] sortie = new String[0];
-        int[] observ = {valueOf(coord0bservateur.substring(0, 1)), valueOf(coord0bservateur.substring(1, 2))};
+        int[] observ = {Integer.valueOf(coord0bservateur.substring(0, 1)), Integer.valueOf(coord0bservateur.substring(1, 2))};
 
 
         boolean visionBloque = false;

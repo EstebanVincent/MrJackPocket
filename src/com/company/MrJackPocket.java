@@ -8,21 +8,33 @@ import java.util.Random;
 public class MrJackPocket {
 
     public District[][] board; //5 5 pour mettre les detectives
-    public int tour;
+    public int tour = 1;
     public int[] temps; //jeton temps double face 0 = tour et 1 = sablier
+    public Player currentPlayer;
 
     public MrJackPocket() {
 
     }
 
 
+
     public void play(){
         débutPartie();
+        for (int i = 1; i < 9; i++ ) {//i est le compteur de tour
+            if (i % 2 == 1){ // tour impair, enqueteurs commence
 
+            } else { // tour pair Jack commence
+
+            }
+        }
 
 
         SuspectDistrict sus = new SuspectDistrict(this); //permet de transferé la valeur des atributs de mrjack a suspectDis
+        Action action = new Action(this);
     }
+
+
+
 
     public District[][] getBoard() {
         return board;
@@ -48,17 +60,29 @@ public class MrJackPocket {
         this.temps = temps;
     }
 
+    public Player getCurrentPlayer() { return currentPlayer; }
+
+    public void setCurrentPlayer(Player currentPlayer) { this.currentPlayer = currentPlayer; }
+
+
+    //permet de transferé la valeur des atributs de player a mrjack
+    private Player player;
+    public MrJackPocket(Player player) {
+        this.player = player;
+    }
 
     public void débutPartie(){
-        //lance la game behind the scene, initialise le plateau, choisi Jack
+        //lance la game behind the scene, initialise le plateau, les joueurs, choisi Jack
         initialiseBoard();
+
+        player.initialiseName();
+        setCurrentPlayer(player.players[1]); //enqueteur commence
 
         Alibi alibi = new Alibi();
 
         alibi.initialisePiocheAlibi();//on crée la pioche
-        Alibi alibiJack = alibi.choixJack(); //alibiJack est la carte alibi de Jack
+        Alibi alibiJack = alibi.choixJack(); //alibiJack est la carte alibi de Jack, et la pioche est update
         String jack = alibiJack.getNom(); //jack est le nom en string de son perso
-        alibi.updatePiocheAlibi(alibiJack); //la pioche ne comprend plus mrJack
         alibi.initialiseAlibiJack(alibiJack); //on initialise les carte alibi en possession de Jack
     }
 

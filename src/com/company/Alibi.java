@@ -20,6 +20,10 @@ public class Alibi {
     public Alibi() {} //constructeur vide pour le début
 
 
+    Action action = new Action(this);
+
+
+
     public String getNom() {
         return nom;
     }
@@ -71,10 +75,21 @@ public class Alibi {
         list.toArray(piocheAlibi);
     }
 
-    public Alibi choixJack(){ // qui est mrJack
+
+
+    public Alibi choixJack(){ // renvoi qui est mrJack et update la pioche
         Random random = new Random();
         int rand = random.nextInt(8 - 0 + 1);
+        updatePiocheAlibi(piocheAlibi[rand]);
         return piocheAlibi[rand];
+    }
+
+    public Alibi draw1Carte(){
+        Random random = new Random();
+        int rand = random.nextInt((piocheAlibi.length-1) - 0 + 1);
+        updatePiocheAlibi(piocheAlibi[rand]);
+        return piocheAlibi[rand];
+
     }
 
     public void updatePiocheAlibi(Alibi cartePioché){ //update la pioche en enlevant la carte pioché
