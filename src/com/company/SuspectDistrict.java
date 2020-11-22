@@ -26,6 +26,8 @@ public class SuspectDistrict extends District{
         boolean visionBloque = false;
         int[] move;
 
+
+        //on défini les movemments a faire sur les districts a partir de l'observateur
         if(orientationRegard == 0){
             move[0] = -1;
             move[1] = 0;
@@ -41,18 +43,15 @@ public class SuspectDistrict extends District{
         }
 
         do {
-
             District observé = board[observ[0]+move[0]][observ[1]+move[1]];
-            if(observé.getOrientation() == orientationRegard){ //on regarde le mur
-                visionBloque = true;
+            if(observé.getOrientation() == orientationRegard){ //on regarde le mur directement (dos du T)
+                visionBloque = true; //la boucle s'arete
             } else if (abs(observé.getOrientation()-orientationRegard) == 2) { //on regarde la base du T
-                if(faceVisible == 1){
-                    sortie = Arrays.copyOf(sortie, sortie.length + 1);
-                    sortie[sortie.length - 1] = observé.getNom(); //
-                    System.out.println(Arrays.toString(sortie));
+                if(faceVisible == 1){ //si face suspect
+                    sortie = Arrays.copyOf(sortie, sortie.length + 1);// on crée une copie qui ecrase l'originale et qui est plus longue de 1 (append en python)
+                    sortie[sortie.length - 1] = observé.getNom(); //On rajoute le nom du personnage dans la case car il est visible
                 }
-                visionBloque = true;
-
+                visionBloque = true; // la fin du T bloque la vision, la boucle s'arete
             }
 
 
