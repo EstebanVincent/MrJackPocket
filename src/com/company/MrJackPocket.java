@@ -2,6 +2,8 @@ package com.company;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+import java.util.Random;
+
 
 public class MrJackPocket {
 
@@ -75,6 +77,8 @@ public class MrJackPocket {
         Collections.shuffle(list);
         list.toArray(perso);
 
+
+
         int a = 0; //indice pour parcourir perso
 
         for (int i = 1; i < 4; i++) {
@@ -83,7 +87,6 @@ public class MrJackPocket {
                 a = a+1; //passe au prochain perso
             }
         }
-
         setBoard(board); //on set la valeur de board locale à celle de la classe
     }
 
