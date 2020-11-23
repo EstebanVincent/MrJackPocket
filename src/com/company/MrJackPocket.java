@@ -1,8 +1,5 @@
 package com.company;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
-import java.util.Random;
+import java.util.*;
 
 
 public class MrJackPocket {
@@ -27,12 +24,17 @@ public class MrJackPocket {
         printBoard();
         for (int i = 1; i < 9; i++ ) {//i est le compteur de tour
             if (i % 2 == 1){ // tour impair, enqueteurs commence
+                setCurrentPlayer(player.players[1]);
+                System.out.println("\nAu tour de l'" + currentPlayer.getName());
+
                 action.initialisePossibleAction();
                 action.printActionPossible();
                 String act1 = action.chooseAction(); //ajouter un verif que c possible avec do while
+                joueAction(act1);
                 action.updateActionPossible(act1);
 
 
+                switchPlayer();
                 action.printActionPossible();
                 String act2 = action.chooseAction(); //ajouter un verif que c possible avec do while
                 action.updateActionPossible(act2);
@@ -42,26 +44,32 @@ public class MrJackPocket {
                 action.updateActionPossible(act3);
 
 
+                switchPlayer();
                 action.printActionPossible();
                 String act4 = action.actionsPossible[0]; //ajouter un verif que c possible avec do while
 
 
             } else { // tour pair Jack commence
+                setCurrentPlayer(player.players[0]);
+                System.out.println("\nAu tour de " + currentPlayer.getName());
+
                 action.printActionPossibleRetournée();
                 String act1 = action.chooseAction(); //ajouter un verif que c possible avec do while
                 action.updateActionPossibleRetournée(act1);
 
 
-                action.printActionPossible();
+                switchPlayer();
+                action.printActionPossibleRetournée();
                 String act2 = action.chooseAction(); //ajouter un verif que c possible avec do while
                 action.updateActionPossibleRetournée(act2);
 
-                action.printActionPossible();
+                action.printActionPossibleRetournée();
                 String act3 = action.chooseAction(); //ajouter un verif que c possible avec do while
                 action.updateActionPossibleRetournée(act3);
 
 
-                action.printActionPossible();
+                switchPlayer();
+                action.printActionPossibleRetournée();
                 String act4 = action.actionsPossibleRetournée[0]; //ajouter un verif que c possible avec do while
 
             }
@@ -133,6 +141,15 @@ public class MrJackPocket {
 
     }
 
+    public void switchPlayer(){
+        if (currentPlayer == player.players[1]){
+            setCurrentPlayer(player.players[0]);
+        } else {
+            setCurrentPlayer(player.players[1]);
+        }
+        System.out.println("Au tour de " + currentPlayer.getName());
+    }
+
 
 
 
@@ -188,6 +205,30 @@ public class MrJackPocket {
                 System.out.print(board[i][j].getNom() + "\t");
             }
             System.out.println();
+        }
+    }
+
+    public void joueAction(String actionChoisie){
+        if (Objects.equals(actionChoisie, new String("rotation1")) || Objects.equals(actionChoisie, new String("rotation2"))){
+            action.rotation();
+            printBoard();
+        } else if (Objects.equals(actionChoisie, new String("échange"))){
+            action.échange();
+            printBoard();
+        } else if (Objects.equals(actionChoisie, new String("getAlibi"))){
+            action.alibi();
+        } else if (Objects.equals(actionChoisie, new String("holmes"))){
+            action.holmes();
+            printBoard();
+        } else if (Objects.equals(actionChoisie, new String("watson"))){
+            action.watson();
+            printBoard();
+        } else if (Objects.equals(actionChoisie, new String("toby"))){
+            action.toby();
+            printBoard();
+        } else if (Objects.equals(actionChoisie, new String("joker"))){
+            action.joker();
+            printBoard();
         }
     }
 

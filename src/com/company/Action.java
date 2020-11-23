@@ -3,6 +3,7 @@ package com.company;
 import javax.swing.plaf.basic.BasicInternalFrameTitlePane;
 import javax.xml.bind.SchemaOutputResolver;
 import java.util.Arrays;
+import java.util.Objects;
 import java.util.Random;
 import java.util.Scanner;
 
@@ -86,35 +87,47 @@ public class Action {
 
 
     public void initialiseJetons(){
-        Action jeton1 = new Action(1, "getAlibi","Holmes");
-        Action jeton2 = new Action(2,"Toby","watson");
-        Action jeton3 = new Action(3,"rotation","échange");
-        Action jeton4 = new Action(4,"rotation","Joker");
+        Action jeton1 = new Action(1, "getAlibi","holmes");
+        Action jeton2 = new Action(2,"toby","watson");
+        Action jeton3 = new Action(3,"rotation1","échange");
+        Action jeton4 = new Action(4,"rotation2","joker");
 
         jetons = new Action[]{jeton1, jeton2, jeton3, jeton4};
     }
 
 
-    public void échange(String coord1, String coord2){ //echange 2 district de place sans changer l'orientation
-        //entre en ligne colone ex: 12 ,32
+    public void échange(){ //echange 2 district de place sans changer l'orientation
+
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("Quelles districts veux tu échanger? (donner ses coordonnées ex: 12)");//rentrer le premier enter puis le deuxieme
+        String districtChoisie1 = scanner.nextLine();
         int[] coordo1;
-        coordo1 = new int[]{Integer.valueOf(coord1.substring(0, 1)), Integer.valueOf(coord1.substring(1, 2))};
+        coordo1 = new int[]{Integer.valueOf(districtChoisie1.substring(0, 1)), Integer.valueOf(districtChoisie1.substring(1, 2))};
 
+        String districtChoisie2 = scanner.nextLine();
         int[] coordo2;
-        coordo2 = new int[]{Integer.valueOf(coord2.substring(0, 1)), Integer.valueOf(coord2.substring(1, 2))};
+        coordo2 = new int[]{Integer.valueOf(districtChoisie2.substring(0, 1)), Integer.valueOf(districtChoisie2.substring(1, 2))};
 
-        int[] tempo = coordo1;
+
+        District tempo = mrJackPocket.board[coordo1[0]][coordo1[1]];
 
         mrJackPocket.board[coordo1[0]][coordo1[1]] = mrJackPocket.board[coordo2[0]][coordo2[1]];
-        mrJackPocket.board[coordo2[0]][coordo2[1]] = mrJackPocket.board[tempo[0]][tempo[1]];
+        mrJackPocket.board[coordo2[0]][coordo2[1]] = tempo;
     }
 
-    public void rotation(String coord1, char direction){
+    public void rotation(){
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("Quelle district veux tu tourner? (donner ses coordonnées ex: 12)");
+        String districtChoisie = scanner.nextLine();
         int[] coordo1;
-        coordo1 = new int[]{Integer.valueOf(coord1.substring(0, 1)), Integer.valueOf(coord1.substring(1, 2))};
+        coordo1 = new int[]{Integer.valueOf(districtChoisie.substring(0, 1)), Integer.valueOf(districtChoisie.substring(1, 2))};
+
+        System.out.println("Dans quelle direction veux tu que la pointe du T soit? (donner un char de type N E S O)");
+        String direction = scanner.nextLine();
+        char dir = direction.charAt(0);
 
         int a; //converti la direction en int, N = 0, E = 1, S = 2, Ouest = 3, c'est le bout du T dans cette direction
-        switch (direction) {
+        switch (dir) {
             case 'N':
                 a = 0;
                 break;
@@ -238,7 +251,7 @@ public class Action {
     public void updateActionPossible(String actionUtilisé){
         String[] newPioche = new String[0];
         for(int i = 0; i < actionsPossible.length; i++){
-            if(actionsPossible[i] != actionUtilisé){
+            if(!(Objects.equals(actionsPossible[i], new String(actionUtilisé)))){
                 newPioche = Arrays.copyOf(newPioche, newPioche.length + 1);// append en python
                 newPioche[newPioche.length - 1] = actionsPossible[i];
             }
@@ -249,7 +262,7 @@ public class Action {
     public void updateActionPossibleRetournée(String actionUtilisé){
         String[] newPioche = new String[0];
         for(int i = 0; i < actionsPossibleRetournée.length; i++){
-            if(actionsPossibleRetournée[i] != actionUtilisé){
+            if(!(Objects.equals(actionsPossibleRetournée[i], new String(actionUtilisé)))){
                 newPioche = Arrays.copyOf(newPioche, newPioche.length + 1);// append en python
                 newPioche[newPioche.length - 1] = actionsPossibleRetournée[i];
             }
