@@ -79,16 +79,16 @@ public class Alibi {
 
     public Alibi choixJack(){ // renvoi qui est mrJack et update la pioche
         Random random = new Random();
-        int rand = random.nextInt(8 - 0 + 1);
+        int rand = random.nextInt(8 - 0 + 1);//int random entre 0 et 8
         Alibi tempo = piocheAlibi[rand]; //valeur tempo car sinon indexOutofBounds avec le update
-        updatePiocheAlibi(piocheAlibi[rand]);
+        updatePiocheAlibi(piocheAlibi[rand]);//la carte pioché n'est plus dans la pioche
         return tempo;
     }
 
-    public Alibi draw1Carte(){
+    public Alibi draw1Carte(){//return la carte pioché et update la pioche
         Random random = new Random();
-        int rand = random.nextInt((piocheAlibi.length-1) - 0 + 1);
-        updatePiocheAlibi(piocheAlibi[rand]);
+        int rand = random.nextInt((piocheAlibi.length-1) - 0 + 1);//int random entre 0 et la longueur de piocheAlibi-1
+        updatePiocheAlibi(piocheAlibi[rand]);//la carte pioché n'est plus dans la pioche
         return piocheAlibi[rand];
 
     }
@@ -104,7 +104,7 @@ public class Alibi {
         piocheAlibi = newPioche;
     }
 
-    public void initialiseAlibiJack(Alibi mrJack){//en entrée mettre choixJack
+    public void initialiseAlibiJack(Alibi mrJack){//mettre en entré le jack optenu par choixJack
         carteJack[0] = mrJack;
     }
 
@@ -113,10 +113,10 @@ public class Alibi {
         carteJack[carteJack.length - 1] = cartePioché; //On rajoute le nom du personnage dans la case car il est visible
     }
 
-    public int nbSablierAlibi(){ //calcul le nb de sablier de Jack uniquement avec les cartes alibi
+    public int nbSablierAlibi(){ //return le nb de sablier de Jack uniquement avec les cartes alibi
         int a = 0;
         for (int i = 0; i < carteJack.length; i++){
-            a += carteJack[0].sablier;
+            a += carteJack[0].sablier; //add le nb de sablier de la carte
         }
         return a;
     }

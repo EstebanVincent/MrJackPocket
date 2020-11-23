@@ -86,7 +86,7 @@ public class Action {
     }
 
 
-    public void initialiseJetons(){
+    public void initialiseJetons(){ //FINI
         Action jeton1 = new Action(1, "getAlibi","holmes");
         Action jeton2 = new Action(2,"toby","watson");
         Action jeton3 = new Action(3,"rotation1","échange");
@@ -96,7 +96,7 @@ public class Action {
     }
 
 
-    public void échange(){ //echange 2 district de place sans changer l'orientation
+    public void échange(){ //echange 2 district de place sans changer l'orientation FINI
 
         Scanner scanner = new Scanner(System.in);
         System.out.println("Quelles districts veux tu échanger? (donner ses coordonnées ex: 12)");//rentrer le premier enter puis le deuxieme
@@ -115,7 +115,7 @@ public class Action {
         mrJackPocket.board[coordo2[0]][coordo2[1]] = tempo;
     }
 
-    public void rotation(){
+    public void rotation(){//rotate un district FINI
         Scanner scanner = new Scanner(System.in);
         System.out.println("Quelle district veux tu tourner? (donner ses coordonnées ex: 12)");
         String districtChoisie = scanner.nextLine();
@@ -146,7 +146,7 @@ public class Action {
         mrJackPocket.board[coordo1[0]][coordo1[1]].setOrientation(a);
     }
 
-    public void alibi(){
+    public void alibi(){ //pioche 1 carte alibi et fait l'action necessaire
         Alibi cartePioché = alibi.draw1Carte();
         if (mrJackPocket.currentPlayer.getName() == "Enqueteur"){
             System.out.println(cartePioché.getNom());
@@ -157,7 +157,7 @@ public class Action {
         }
     }
 
-    public void joker(){
+    public void joker(){ //choisi qui déplacé divergence si enqueteur ou jack
         if (mrJackPocket.currentPlayer.getName() == "Enqueteur"){
             System.out.println("Quel enqueteur veux tu déplacer de 1 espace ?");
             Scanner scanner = new Scanner(System.in);
@@ -187,7 +187,7 @@ public class Action {
 
 
     //déplacement a coder
-    public void holmes(){
+    public void holmes(){ //Deplace de 1 ou 2 sens aiguilles montre holmes
         //bouge dans le sens des aiguille d'une montre de 1 ou 2 case
         System.out.println("Veux tu etre avancé de 1 ou 2 espaces dans le sens des aiguilles d'une montre ?"); // rentrer 1 ou 2
         Scanner scanner = new Scanner(System.in);
@@ -195,7 +195,7 @@ public class Action {
         int a = Integer.valueOf(deplacement);
     }
 
-    public void watson(){
+    public void watson(){//Deplace de 1 ou 2 sens aiguilles montre watson
         //bouge dans le sens des aiguille d'une montre de 1 ou 2 case
         System.out.println("Veux tu etre avancé de 1 ou 2 espaces dans le sens des aiguilles d'une montre ?"); // rentrer 1 ou 2
         Scanner scanner = new Scanner(System.in);
@@ -203,7 +203,7 @@ public class Action {
         int a = Integer.valueOf(deplacement);
     }
 
-    public void toby(){
+    public void toby(){//Deplace de 1 ou 2 sens aiguilles montre toby
         //bouge dans le sens des aiguille d'une montre de 1 ou 2 case
         System.out.println("Veux tu etre avancé de 1 ou 2 espaces dans le sens des aiguilles d'une montre ?"); // rentrer 1 ou 2
         Scanner scanner = new Scanner(System.in);
@@ -211,7 +211,7 @@ public class Action {
         int a = Integer.valueOf(deplacement);
     }
 
-    public void initialisePossibleAction(){// change list de string des action possible aux 2 prochains tours
+    public void initialisePossibleAction(){// initialise les action possible aux 2 prochains tours FINI
         Random rd = new Random();
         boolean[] faceAction= new boolean[4];
         String[] sortieEnqueteur = new String[0];
@@ -232,7 +232,7 @@ public class Action {
         actionsPossibleRetournée = sortieJack;
     }
 
-    public void printActionPossible(){
+    public void printActionPossible(){ //print les actions possible au tour impair FINI
         System.out.println();
         for (int i = 0; i < actionsPossible.length-1; i++){
             System.out.print(actionsPossible[i] + "\t");
@@ -240,7 +240,7 @@ public class Action {
         System.out.println(actionsPossible[actionsPossible.length-1]);
     }
 
-    public void printActionPossibleRetournée(){
+    public void printActionPossibleRetournée(){ //print les actions possible au tour pair FINI
         System.out.println();
         for (int i = 0; i < actionsPossibleRetournée.length-1; i++){
             System.out.print(actionsPossibleRetournée[i] + "\t");
@@ -248,7 +248,7 @@ public class Action {
         System.out.println(actionsPossibleRetournée[actionsPossibleRetournée.length-1]);
     }
 
-    public void updateActionPossible(String actionUtilisé){
+    public void updateActionPossible(String actionUtilisé){ //enleve l'action utilisé des actions possible au tour impair FINI
         String[] newPioche = new String[0];
         for(int i = 0; i < actionsPossible.length; i++){
             if(!(Objects.equals(actionsPossible[i], new String(actionUtilisé)))){
@@ -259,7 +259,7 @@ public class Action {
         setActionsPossible(newPioche);
     }
 
-    public void updateActionPossibleRetournée(String actionUtilisé){
+    public void updateActionPossibleRetournée(String actionUtilisé){  //enleve l'action utilisé des actions possible au tour pair FINI
         String[] newPioche = new String[0];
         for(int i = 0; i < actionsPossibleRetournée.length; i++){
             if(!(Objects.equals(actionsPossibleRetournée[i], new String(actionUtilisé)))){
@@ -270,7 +270,7 @@ public class Action {
         setActionsPossibleRetournée(newPioche);
     }
 
-    public String chooseAction(){
+    public String chooseAction(){ //demande au joueur de rentrer son choix d'action, return l'action choisie FINI
         System.out.println();
         System.out.println("Quelle action choisi-tu ?");
         Scanner scanner = new Scanner(System.in);

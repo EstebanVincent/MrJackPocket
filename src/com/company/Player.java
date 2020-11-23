@@ -22,7 +22,7 @@ public class Player {
     //MrJackPocket mrJackPocket = new MrJackPocket(this);
 
 
-    public void initialiseName(){
+    public void initialiseName(){ //initialise les players
         Player jack = new Player("Mr. Jack");
         Player enqueteur = new Player("Enqueteur");
         setPlayers(new Player[]{jack, enqueteur});

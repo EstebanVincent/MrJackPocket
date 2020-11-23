@@ -216,7 +216,7 @@ public class MrJackPocket {
             action.échange();
             printBoard();
         } else if (Objects.equals(actionChoisie, new String("getAlibi"))){
-            action.alibi();
+            action.alibi(); //alibi est null??
         } else if (Objects.equals(actionChoisie, new String("holmes"))){
             action.holmes();
             printBoard();
@@ -247,6 +247,11 @@ public class MrJackPocket {
             return 3;
         }
     }
+
+    public boolean appelATemoin(){ //true si jack visible, false sinon
+        return false;
+    }
+
     public boolean plus6Sablier(){ //dit true si oui
         return false;
     }

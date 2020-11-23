@@ -85,7 +85,7 @@ public class District { //nom en foction du perso dessus
         //districtes juste case ou y'as rien
         District Vide = new District("Vide",1,0,1);
 
-        District[][] bdd = new District[3][9];
+        District[][] bdd = new District[3][9];//on cree tablo de 3 lignes 9 colones
 
         //on schuffle cette liste pour que les districtes soient tjr à des positions différentes
         District[] perso = {Mme, SGT, JB, WG, Ms, Gs, Insp, JP, JL};
@@ -101,12 +101,12 @@ public class District { //nom en foction du perso dessus
                 } else if(i == 1) {
                     bdd[i][j] = detect[j];
                     a = a+1; //passe au prochain detect
-                    if(a == 3){
+                    if(a == 3){ //on a assigné les détectives, le reste reste null
                         break;
                     }
                 } else {
                     bdd[i][j] = detect[3];
-                    break;
+                    break; //on a  assigné vide, le reste reste null
                 }
 
             }
