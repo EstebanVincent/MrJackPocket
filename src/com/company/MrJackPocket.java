@@ -202,7 +202,7 @@ public class MrJackPocket {
     private void printBoard(){// faire un truc graphique
         for (int i = 0; i < 5; i++) {
             for (int j = 0; j < 5; j++) {
-                System.out.print(board[i][j].getNom() + "\t");
+                System.out.print(board[i][j].getNom() + " " +board[i][j].getOrientation() + "\t");
             }
             System.out.println();
         }
