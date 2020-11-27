@@ -17,14 +17,8 @@ public class Action {
     public String[] actionsPossible;
     public String[] actionsPossibleRetournée;
 
-    public final int[][] positionDetectiveList = { {0,1}, {0,2}, {0,3}, {1,4}, {2,4}, {3,4}, {4,3}, {4,2}, {4,1}, {3,0}, {2,0}, {1,0}, {0,1}, {0,2} };;
+    public final int[][] positionDetectiveList = { {0,1}, {0,2}, {0,3}, {1,4}, {2,4}, {3,4}, {4,3}, {4,2}, {4,1}, {3,0}, {2,0}, {1,0}, {0,1}, {0,2} };
 
-    @Override
-    public String toString() {
-        return "Action{" +
-                "positionDetectiveList=" + Arrays.toString(positionDetectiveList) +
-                '}';
-    }
 
     public Action(int jeton, String recto, String verso) {
         this.jeton = jeton;

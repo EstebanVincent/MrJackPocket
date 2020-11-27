@@ -22,10 +22,11 @@ public class MrJackPocket {
     public void play(){//les actions possible ne d'updatesPas probleme d'opp
         débutPartie();
         printBoard();
+
         for (int i = 1; i < 9; i++ ) {//i est le compteur de tour
+
             if (i % 2 == 1){ // tour impair, enqueteurs commence
-                setCurrentPlayer(player.players[1]);
-                System.out.println("\nAu tour de l'" + currentPlayer.getName());
+                switchPlayer();
 
                 action.initialisePossibleAction();
                 action.printActionPossible();
@@ -49,13 +50,18 @@ public class MrJackPocket {
                 switchPlayer();
                 action.printActionPossible();
                 String act4 = action.actionsPossible[0]; //ajouter un verif que c possible avec do while
-                joueAction(act4);
+                //joueAction(act4);
 
+                String[] retour = sus.see(district.baseDeDonnee[1][0]);
+
+                //nefonctionnePas
+                for (int k = 0; k < retour.length ; k++){
+                    System.out.println(retour[k]);
+                }
 
             } else { // tour pair Jack commence
-                setCurrentPlayer(player.players[0]);
-                System.out.println("\nAu tour de " + currentPlayer.getName());
 
+                switchPlayer();
                 action.printActionPossibleRetournée();
                 String act1 = action.chooseAction(); //ajouter un verif que c possible avec do while
                 joueAction(act1);
@@ -77,11 +83,17 @@ public class MrJackPocket {
                 switchPlayer();
                 action.printActionPossibleRetournée();
                 String act4 = action.actionsPossibleRetournée[0]; //ajouter un verif que c possible avec do while
-                joueAction(act4);
+                //joueAction(act4);
             }
 
 
+
+
         }
+
+
+
+
     }
 
 
@@ -136,7 +148,7 @@ public class MrJackPocket {
         initialiseBoard();
 
         player.initialiseName();
-        setCurrentPlayer(player.players[1]); //enqueteur commence
+        setCurrentPlayer(player.players[0]); //enqueteur commence
         alibi.initialisePiocheAlibi();//on crée la pioche
 
         Alibi alibiJack = alibi.choixJack(); //alibiJack est la carte alibi de Jack, et la pioche est update
@@ -144,6 +156,7 @@ public class MrJackPocket {
         alibi.initialiseAlibiJack(alibiJack); //on initialise les carte alibi en possession de Jack
 
         action.initialiseJetons();
+
 
     }
 
