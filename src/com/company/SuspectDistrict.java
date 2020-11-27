@@ -53,10 +53,10 @@ public class SuspectDistrict extends District{
                 visionBloque = true; //la boucle s'arete
             } else if (abs(observé.getOrientation()-orientationRegard) == 2) { //on regarde la base du T
                 if(faceVisible == 1){ //si face suspect
-                    sortie = Arrays.copyOf(sortie, sortie.length + 1);// on crée une copie qui ecrase l'originale et qui est plus longue de 1 (append en python)
+                    sortie = Arrays.copyOf(sortie, sortie.length + 1);// on crée une copie qui écrase l'originale et qui est plus longue de 1 (append en python)
                     sortie[sortie.length - 1] = observé.getNom(); //On rajoute le nom du personnage dans la case car il est visible
                 }
-                visionBloque = true; // la fin du T bloque la vision, la boucle s'arete
+                visionBloque = true; // la fin du T bloque la vision, la boucle s'arrête
             } else if (observé.getNom() == "Joseph Lane" && faceVisible == 0){//exception si case coté vide car pas en forme de T mais X
                 i += 1;
             }  else { //on voit a travers le T

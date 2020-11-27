@@ -1,7 +1,5 @@
 package com.company;
 
-import javax.swing.plaf.basic.BasicInternalFrameTitlePane;
-import javax.xml.bind.SchemaOutputResolver;
 import java.util.Arrays;
 import java.util.Objects;
 import java.util.Random;
@@ -19,10 +17,23 @@ public class Action {
     public String[] actionsPossible;
     public String[] actionsPossibleRetournée;
 
+    public final int[][] positionDetectiveList = { {0,1}, {0,2}, {0,3}, {1,4}, {2,4}, {3,4}, {4,3}, {4,2}, {4,1}, {3,0}, {2,0}, {1,0}, {0,1}, {0,2} };;
+
+    @Override
+    public String toString() {
+        return "Action{" +
+                "positionDetectiveList=" + Arrays.toString(positionDetectiveList) +
+                '}';
+    }
+
     public Action(int jeton, String recto, String verso) {
         this.jeton = jeton;
         this.recto = recto;
         this.verso = verso;
+    }
+
+    public Action() {
+
     }
 
     public String getRecto() {
@@ -157,58 +168,36 @@ public class Action {
         }
     }
 
-    public void joker(){ //choisi qui déplacé divergence si enqueteur ou jack
-        if (mrJackPocket.currentPlayer.getName() == "Enqueteur"){
-            System.out.println("Quel enqueteur veux tu déplacer de 1 espace ?");
-            Scanner scanner = new Scanner(System.in);
-            String déplacé = scanner.nextLine();
-            if (déplacé == "Holmes" || déplacé == "holmes"){
-                holmes();
-            } else if (déplacé == "Watson" || déplacé == "watson"){
-                watson();
-            } else if (déplacé == "Toby" || déplacé == "toby"){
-                toby();
-            }
-
-
-        } else if (mrJackPocket.currentPlayer.getName() == "Mr. Jack"){
-            System.out.println("Quel enqueteur veux tu déplacer de 1 espace ? (none si aucune action)");
-            Scanner scanner = new Scanner(System.in);
-            String déplacé = scanner.nextLine();
-            if (déplacé == "Holmes" || déplacé == "holmes"){
-                holmes();
-            } else if (déplacé == "Watson" || déplacé == "watson"){
-                watson();
-            } else if (déplacé == "Toby" || déplacé == "toby"){
-                toby();
+    public void deplacementDetective(District detective){
+        //bouge dans le sens des aiguille d'une montre de 1 ou 2 case
+        int[] oldCoordDetective;
+        int[] newCoordDetective = new int[2];
+        oldCoordDetective = mrJackPocket.findPosition(detective);
+        System.out.println("Veux-tu avancer de 1 ou 2 espaces dans le sens des aiguilles d'une montre ?"); // rentrer 1 ou 2
+        Scanner scanner = new Scanner(System.in);
+        String deplacement = scanner.nextLine();
+        int a = Integer.valueOf(deplacement);
+        for (int i = 0; i < positionDetectiveList.length; i++ ) {
+            if (positionDetectiveList[i][0] == oldCoordDetective[0] && positionDetectiveList[i][1] == oldCoordDetective[1]){
+                newCoordDetective = positionDetectiveList[i + a];
             }
         }
+        mrJackPocket.board[oldCoordDetective[0]][oldCoordDetective[1]] = mrJackPocket.board[0][0];
+        mrJackPocket.board[newCoordDetective[0]][newCoordDetective[1]] = detective;
     }
 
-
-    //déplacement a coder
-    public void holmes(){ //Deplace de 1 ou 2 sens aiguilles montre holmes
+    public void deplacementDetective(District detective, int a){
         //bouge dans le sens des aiguille d'une montre de 1 ou 2 case
-        System.out.println("Veux tu etre avancé de 1 ou 2 espaces dans le sens des aiguilles d'une montre ?"); // rentrer 1 ou 2
-        Scanner scanner = new Scanner(System.in);
-        String deplacement = scanner.nextLine();
-        int a = Integer.valueOf(deplacement);
-    }
-
-    public void watson(){//Deplace de 1 ou 2 sens aiguilles montre watson
-        //bouge dans le sens des aiguille d'une montre de 1 ou 2 case
-        System.out.println("Veux tu etre avancé de 1 ou 2 espaces dans le sens des aiguilles d'une montre ?"); // rentrer 1 ou 2
-        Scanner scanner = new Scanner(System.in);
-        String deplacement = scanner.nextLine();
-        int a = Integer.valueOf(deplacement);
-    }
-
-    public void toby(){//Deplace de 1 ou 2 sens aiguilles montre toby
-        //bouge dans le sens des aiguille d'une montre de 1 ou 2 case
-        System.out.println("Veux tu etre avancé de 1 ou 2 espaces dans le sens des aiguilles d'une montre ?"); // rentrer 1 ou 2
-        Scanner scanner = new Scanner(System.in);
-        String deplacement = scanner.nextLine();
-        int a = Integer.valueOf(deplacement);
+        int[] oldCoordDetective;
+        int[] newCoordDetective = new int[2];
+        oldCoordDetective = mrJackPocket.findPosition(detective);
+        for (int i = 0; i < positionDetectiveList.length; i++ ) {
+            if (positionDetectiveList[i][0] == oldCoordDetective[0] && positionDetectiveList[i][1] == oldCoordDetective[1]){
+                newCoordDetective = positionDetectiveList[i + a];
+            }
+        }
+        mrJackPocket.board[oldCoordDetective[0]][oldCoordDetective[1]] = mrJackPocket.board[0][0];
+        mrJackPocket.board[newCoordDetective[0]][newCoordDetective[1]] = detective;
     }
 
     public void initialisePossibleAction(){// initialise les action possible aux 2 prochains tours FINI

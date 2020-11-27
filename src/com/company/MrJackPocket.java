@@ -37,16 +37,19 @@ public class MrJackPocket {
                 switchPlayer();
                 action.printActionPossible();
                 String act2 = action.chooseAction(); //ajouter un verif que c possible avec do while
+                joueAction(act2);
                 action.updateActionPossible(act2);
 
                 action.printActionPossible();
                 String act3 = action.chooseAction(); //ajouter un verif que c possible avec do while
+                joueAction(act3);
                 action.updateActionPossible(act3);
 
 
                 switchPlayer();
                 action.printActionPossible();
                 String act4 = action.actionsPossible[0]; //ajouter un verif que c possible avec do while
+                joueAction(act4);
 
 
             } else { // tour pair Jack commence
@@ -55,23 +58,26 @@ public class MrJackPocket {
 
                 action.printActionPossibleRetournée();
                 String act1 = action.chooseAction(); //ajouter un verif que c possible avec do while
+                joueAction(act1);
                 action.updateActionPossibleRetournée(act1);
 
 
                 switchPlayer();
                 action.printActionPossibleRetournée();
                 String act2 = action.chooseAction(); //ajouter un verif que c possible avec do while
+                joueAction(act2);
                 action.updateActionPossibleRetournée(act2);
 
                 action.printActionPossibleRetournée();
                 String act3 = action.chooseAction(); //ajouter un verif que c possible avec do while
+                joueAction(act3);
                 action.updateActionPossibleRetournée(act3);
 
 
                 switchPlayer();
                 action.printActionPossibleRetournée();
                 String act4 = action.actionsPossibleRetournée[0]; //ajouter un verif que c possible avec do while
-
+                joueAction(act4);
             }
 
 
@@ -114,7 +120,7 @@ public class MrJackPocket {
 
     public void setCurrentPlayer(Player currentPlayer) { this.currentPlayer = currentPlayer; }
 
-
+    District district = new District();
 
     /*
     //permet de transferé la valeur des atributs de player a mrjack
@@ -155,7 +161,6 @@ public class MrJackPocket {
 
     private void initialiseBoard(){ //fini
         District[][] board = new District[5][5];
-        District district = new District();
         district.setUp();
 
         //les cases exterieurs sont vides
@@ -218,18 +223,40 @@ public class MrJackPocket {
         } else if (Objects.equals(actionChoisie, new String("getAlibi"))){
             action.alibi(); //alibi est null??
         } else if (Objects.equals(actionChoisie, new String("holmes"))){
-            action.holmes();
+            action.deplacementDetective(district.baseDeDonnee[1][0]);
             printBoard();
         } else if (Objects.equals(actionChoisie, new String("watson"))){
-            action.watson();
+            action.deplacementDetective(district.baseDeDonnee[1][1]);
             printBoard();
         } else if (Objects.equals(actionChoisie, new String("toby"))){
-            action.toby();
+            action.deplacementDetective(district.baseDeDonnee[1][2]);
             printBoard();
         } else if (Objects.equals(actionChoisie, new String("joker"))){
-            action.joker();
+            System.out.println("Quel Detective veux-tu déplacer ?");
+            Scanner scanner = new Scanner(System.in);
+            String detective = scanner.nextLine();
+            if (Objects.equals(detective, new String("holmes"))){
+                action.deplacementDetective(district.baseDeDonnee[1][0],1);
+            } else if (Objects.equals(actionChoisie, new String("watson"))){
+                action.deplacementDetective(district.baseDeDonnee[1][1],1);
+            } else if (Objects.equals(actionChoisie, new String("toby"))){
+                action.deplacementDetective(district.baseDeDonnee[1][2],1);
+            }
             printBoard();
         }
+    }
+
+    public int[] findPosition(District district){
+        int[] defaut = {0,0};
+        for (int i = 0; i< board.length; i++){
+            for (int j = 0; j< board.length; j++){
+                if (board[i][j].getNom() == district.getNom()){
+                    int[] a = {i,j};
+                    return a;
+                }
+            }
+        }
+        return defaut;
     }
 
     public int win(){ //0 si personne gagne, 1 si MrJack gagne, 2 si detectives gagne, 3 si les 2 gagne
