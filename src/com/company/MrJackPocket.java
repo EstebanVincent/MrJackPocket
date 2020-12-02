@@ -1,8 +1,11 @@
 package com.company;
 import javafx.scene.control.ToolBar;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.*;
 import javax.swing.*;
+import javax.swing.plaf.nimbus.NimbusLookAndFeel;
 import java.awt.*;
 import java.util.List;
 
@@ -26,9 +29,9 @@ public class MrJackPocket{
 
     public void play(){//les actions possible ne d'updatesPas probleme d'opp
         débutPartie();
-        printBoard();
+        //printBoard();
         printBoardGraph();
-
+/*
         for (int i = 1; i < 9; i++ ) {//i est le compteur de tour
 
             if (i % 2 == 1){ // tour impair, enqueteurs commence
@@ -95,7 +98,11 @@ public class MrJackPocket{
 
 
 
+
+
         }
+         */
+
 
 
 
@@ -140,13 +147,12 @@ public class MrJackPocket{
 
     District district = new District();
 
-
-    public void printBoardGraph(){
+    JFrame frame = new JFrame("Mr Jack Pocket");
+    public void printBoardGraph() {
 
         //on initialise la JFrame
-        JFrame game = new JFrame("Game");
-        game.setVisible(true);
-        game.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        frame.setVisible(true);
+        frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         //game.setSize(816,816);
 
 
@@ -164,17 +170,32 @@ public class MrJackPocket{
         //On initialise la toolBar
         JToolBar toolBar = new JToolBar();
 
+        JLabel oneUse = new JLabel("Set up : ");
         JButton start = new JButton("Start Game"); //Ce bouton doit print le board initial
         JButton whoIsJack = new JButton("Qui est Mr. Jack ?"); //Ce bouton initialise qui est Mr. Jack et le dis au joueur, et place la pile de alibi a droite dans cartes
 
+        JLabel eachRound = new JLabel("En fin de tour : ");
+        JButton temoin = new JButton("Appel a témoin"); //Ce bouton demande au joueur si Mr. Jack est visible
+
+        JLabel fin = new JLabel("En fin de partie : ");
+        JButton win = new JButton("Win ?"); //appuyer si tu pense avoir gagner, l'ordi vérifie
+
+        toolBar.add(oneUse);
         toolBar.add(start);
         toolBar.add(whoIsJack);
+        toolBar.addSeparator(new Dimension(40,0));
+
+        toolBar.add(eachRound);
+        toolBar.add(temoin);
+        toolBar.addSeparator(new Dimension(40,0));
+
+        toolBar.add(fin);
+        toolBar.add(win);
 
         //on initialise les bails a droite du plateau, cad pioche alibi et actions possible
         JPanel cartes = new JPanel();
         cartes.setLayout(new GridLayout(2,1));
         JButton piocheAlibi = new JButton(new ImageIcon("image/piocheAlibi.png")); //appuyer sur ce bouton pioche une carte alibi
-        //cartes.add(new JLabel(new ImageIcon("image/piocheAlibi.png")));
         cartes.add(piocheAlibi);
 
         //On initialise le panel avec 4 bouton
@@ -193,7 +214,7 @@ public class MrJackPocket{
         JPanel tourDeJeu = new JPanel();
         tourDeJeu.setLayout(new GridLayout(9,1));
         tourDeJeu.setPreferredSize(new Dimension(120,0));
-        JLabel carteJack = new JLabel(new ImageIcon("image/carteJAck.png"));
+        JLabel carteJack = new JLabel(new ImageIcon("image/carteJack.png"));
         JLabel tour1 = new JLabel("tour1");
         JLabel tour2 = new JLabel("tour2");
         JLabel tour3 = new JLabel("tour3");
@@ -208,14 +229,45 @@ public class MrJackPocket{
         tourDeJeu.add(tour4);   tourDeJeu.add(tour3);   tourDeJeu.add(tour2);   tourDeJeu.add(tour1);
         //rajouter les jetons avec les tour dessus a l'aide d'une methode
 
+        JLabel imgGarde = new JLabel(district.changeSize("image/garde.jpg",800,800)); //changer image de fond elle pue la merde
+        imgGarde.setLayout( new GridBagLayout() );
 
+        JButton debut = new JButton("Start Game");
+        debut.setPreferredSize(new Dimension(550, 100));
+        debut.setFont(debut.getFont().deriveFont(100f));
+        debut.setContentAreaFilled(false);//maybe ajouter une fleche qui s'ffiche qd tu le selectione
+        imgGarde.add(debut, new GridBagConstraints());
 
-        game.add(plateau);
-        game.add(toolBar, BorderLayout.NORTH);
-        game.add(cartes, BorderLayout.EAST);
-        game.add(tourDeJeu,BorderLayout.WEST);
-        game.setLocationRelativeTo(null);
-        game.pack();
+        //JButton credit = new JButton("crédits");
+        //imgGarde.add(credit, new GridBagConstraints());
+
+        frame.add(toolBar, BorderLayout.NORTH);
+        frame.add(imgGarde);
+        frame.pack();
+        frame.setLocationRelativeTo(null); //centre la fenetre, tjr le metre en dernier sinon marche ap
+
+        debut.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                frame.remove(imgGarde);
+                frame.add(plateau, BorderLayout.CENTER);
+                frame.add(cartes, BorderLayout.EAST);
+                frame.add(tourDeJeu,BorderLayout.WEST);
+                toolBar.remove(start);
+                updateFrame();
+            }
+        });
+    }
+    public void transparent(JButton button){ //Rend le bouton transparent, on voit juste le text et la bordure
+        button.setContentAreaFilled(false);
+        button.setBorder(BorderFactory.createLineBorder(Color.BLACK,4));
+    }
+
+    public void updateFrame(){
+        //les 3 autres lignes pour updates la frame
+        frame.pack();
+        frame.setLocationRelativeTo(null);
+        SwingUtilities.updateComponentTreeUI(frame);
     }
 
     public void débutPartie(){
