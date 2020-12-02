@@ -84,13 +84,13 @@ public class District { //nom en foction du perso dessus
         }
 
         District Mme = new District("Madame",orienté[0],1,1,changeSize("image/faceSus/Madame.png",160,160));
-        District SGT = new District("SGT Goodley",orienté[1],1,1, changeSize("image/faceSus/SGT_Goodley.png",160,160));
-        District JB = new District("Jeremy Bert",orienté[2],1,1, changeSize("image//Jeremy_Bert.png",160,160));
+        District SGT = new District("SGT Goodley",orienté[1],1,1, changeSize("image/faceSus/Sgt._Goodley.png",160,160));
+        District JB = new District("Jeremy Bert",orienté[2],1,1, changeSize("image/faceSus/Jeremy_Bert.png",160,160));
         District WG = new District("William Gull",orienté[3],1,1, changeSize("image/faceSus/William_Gull.png",160,160));
         District Ms = new District("Miss Stealthy",orienté[4],1,1, changeSize("image/faceSus/Miss_Stealthy.png",160,160));
         District Gs = new District("John Smith",orienté[5],1,1, changeSize("image/faceSus/John_Smith.png",160,160));
         District Insp = new District("Insp. Lestrade",orienté[6],1,1, changeSize("image/faceSus/Insp._Lestrade.png",160,160));
-        District JP = new District("John Piser",orienté[7],1,1, changeSize("image/faceSus/John_Piser.png",160,160));
+        District JP = new District("John Pizer",orienté[7],1,1, changeSize("image/faceSus/John_Pizer.png",160,160));
         District JL = new District("Joseph Lane",orienté[8],1,1, changeSize("image/faceSus/Joseph_Lane.png",160,160)); // spécial si retournéé croix preciser dans suspect district
 
         //des district speciaux avec les inspecteurs dessus, regles diff

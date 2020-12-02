@@ -8,13 +8,15 @@ public class Main {
 
     public static void main(String[] args) {
 
-        //MrJackPocket a = new MrJackPocket();
-        //a.play();
+        MrJackPocket a = new MrJackPocket();
+        a.play();
 
         //Action ac = new Action();
         //System.out.println(ac.positionDetectiveList[1][0]);
-        Main m = new Main();
-        m.setUpSwing();
+        //Main m = new Main();
+        //MrJackPocket mr = new MrJackPocket();
+        //mr.test();
+        //m.setUpSwing();
 
 
 
@@ -25,7 +27,7 @@ public class Main {
         JFrame frame = new JFrame("Start");
         frame.setVisible(true);
         frame.setSize(400, 400);
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         frame.setLocationRelativeTo(null);
 
 
