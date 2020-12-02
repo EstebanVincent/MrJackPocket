@@ -1,13 +1,16 @@
 package com.company;
 import java.util.*;
-
+import javax.swing.*;
+import java.awt.*;
 
 public class MrJackPocket {
 
-    public District[][] board; //5 5 pour mettre les detectives
+    public District[][] board = new District[5][5]; //5 5 pour mettre les detectives
     public int tour = 1;
     public int[] temps; //jeton temps double face 0 = tour et 1 = sablier
     public Player currentPlayer;
+    public JLabel[][] boardGraph = new JLabel[5][5];
+
 
     public MrJackPocket() {
 
@@ -22,6 +25,7 @@ public class MrJackPocket {
     public void play(){//les actions possible ne d'updatesPas probleme d'opp
         débutPartie();
         printBoard();
+        printBoardGraph();
 
         for (int i = 1; i < 9; i++ ) {//i est le compteur de tour
 
@@ -134,14 +138,64 @@ public class MrJackPocket {
 
     District district = new District();
 
-    /*
-    //permet de transferé la valeur des atributs de player a mrjack
-    private Player player;
-    public MrJackPocket(Player player) {
-        this.player = player;
+
+    public void printBoardGraph(){
+        JFrame plateau = new JFrame("Board");
+        plateau.setVisible(true);
+        plateau.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        plateau.setSize(820,820);
+        plateau.setLocationRelativeTo(null);
+
+        JPanel panel = new JPanel();
+        panel.setLayout(new GridLayout(5,5,10,10));
+        panel.setComponentOrientation(ComponentOrientation.LEFT_TO_RIGHT);
+        for (int i = 0; i < 5; i++){
+            for (int j = 0; j < 5; j++){
+                panel.add(boardGraph[i][j]);
+            }
+        }
+        plateau.add(panel);
+        plateau.pack();
+    }
+/*
+    public void setBoard(){
+
+
+        boardGraph[1][1] = new JLabel(board[1][1].getFaceSus());
+        boardGraph[1][2] = new JLabel(board[1][2].getFaceSus());
+        boardGraph[1][3] = new JLabel(board[1][3].getFaceSus());
+        boardGraph[2][1] = new JLabel(board[2][1].getFaceSus());
+        boardGraph[2][2] = new JLabel(board[2][2].getFaceSus());
+        boardGraph[2][3] = new JLabel(board[2][3].getFaceSus());
+        boardGraph[3][1] = new JLabel(board[3][1].getFaceSus());
+        boardGraph[3][2] = new JLabel(board[3][2].getFaceSus());
+        boardGraph[3][3] = new JLabel(board[3][3].getFaceSus());
+
+        boardGraph[0][0] = new JLabel(board[0][0].getFaceSus());
+        boardGraph[0][1] = new JLabel(board[0][1].getFaceSus());
+        boardGraph[0][2] = new JLabel(board[0][2].getFaceSus());
+        boardGraph[0][3] = new JLabel(board[0][3].getFaceSus());
+        boardGraph[0][4] = new JLabel(board[0][4].getFaceSus());
+
+        boardGraph[2][0] = new JLabel(board[2][0].getFaceSus());
+        boardGraph[2][4] = new JLabel(board[2][4].getFaceSus());
+
+
+
+
+         Rotate use
+        RotatedIcon rotatedIcon = new RotatedIcon(changeSize("faceSus/imgDistrict1.png",160, 160),RotatedIcon.Rotate.DOWN);
+        JLabel district1 = new JLabel(rotatedIcon);
+        board[1][1] = district1;
+
+
+
+
+
     }
 
-     */
+ */
+
 
     public void débutPartie(){
         //lance la game behind the scene, initialise le plateau, les joueurs, choisi Jack
@@ -173,39 +227,44 @@ public class MrJackPocket {
 
 
     private void initialiseBoard(){ //fini
-        District[][] board = new District[5][5];
+        //District[][] board = new District[5][5];
         district.setUp();
 
         //les cases exterieurs sont vides
         for (int i = 0; i < 5; i++) {//ligne
             board[0][i] = district.baseDeDonnee[2][0]; //exception
+            //boardGraph[0][i] = new JLabel(board[0][i].getFaceSus());
+            boardGraph[0][i] = new JLabel(district.baseDeDonnee[2][0].getFaceSus());
             for (int j = 0; j < 5; j++) {//colone
                 if (j == 0 || j == 4) {
                     board[i][j] = district.baseDeDonnee[2][0]; //Vide
+                    boardGraph[i][j] = new JLabel(board[i][j].getFaceSus());
                 }
                 if (i == 0 || i == 4){
                     board[i][j] = district.baseDeDonnee[2][0];//Vide
+                    boardGraph[i][j] = new JLabel(board[i][j].getFaceSus());
                 }
             }
         }
         //board[0][0] = board[4][0] =board[0][4] = board[4][4] = null;
         board[1][0] = district.baseDeDonnee[1][0]; //Holmes
+        boardGraph[1][0] = new JLabel(board[1][0].getFaceSus());
+
         board[1][4] = district.baseDeDonnee[1][1]; //Watson
+        boardGraph[1][4] = new JLabel(board[1][4].getFaceSus());
+
         board[4][2] = district.baseDeDonnee[1][2]; //Toby
+        boardGraph[4][2] = new JLabel(board[4][2].getFaceSus());
 
         //on schuffle cette liste pour que les districtes soient tjr à des positions différentes
         District[] perso = district.baseDeDonnee[0];
-        List<District> list = Arrays.asList(perso);
-        Collections.shuffle(list);
-        list.toArray(perso);
-
-
 
         int a = 0; //indice pour parcourir perso
 
         for (int i = 1; i < 4; i++) {
             for (int j = 1; j < 4; j++) {
                 board[i][j] = perso[a];
+                boardGraph[i][j] = new JLabel(board[i][j].getFaceSus());
                 a = a+1; //passe au prochain perso
             }
         }
@@ -214,7 +273,7 @@ public class MrJackPocket {
         board[1][3].setOrientation(3);
         board[3][2].setOrientation(0);
 
-        setBoard(board); //on set la valeur de board locale à celle de la classe
+        //setBoard(board); //on set la valeur de board locale à celle de la classe
     }
 
     private void printBoard(){// faire un truc graphique

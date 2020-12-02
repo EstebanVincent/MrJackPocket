@@ -1,13 +1,14 @@
 package com.company;
 
+import javax.swing.*;
 import java.util.Arrays;
 import static java.lang.Integer.*;
 import static java.lang.Math.abs;
 
 public class SuspectDistrict extends District{
 
-    public SuspectDistrict(String nom, int orientation, int typeDistrict, int faceVisible) {
-        super(nom, orientation, typeDistrict, faceVisible);
+    public SuspectDistrict(String nom, int orientation, int typeDistrict, int faceVisible, ImageIcon faceSus) {
+        super(nom, orientation, typeDistrict, faceVisible, faceSus);
     }
 
     public SuspectDistrict(){
