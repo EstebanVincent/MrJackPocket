@@ -1,4 +1,6 @@
 package com.company;
+import javafx.scene.control.ToolBar;
+
 import java.util.*;
 import javax.swing.*;
 import java.awt.*;
@@ -141,40 +143,83 @@ public class MrJackPocket{
 
     public void printBoardGraph(){
 
-        JFrame plateau = new JFrame("Board");
-        plateau.setVisible(true);
-        plateau.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        plateau.setSize(820,820);
-        plateau.setLocationRelativeTo(null);
+        //on initialise la JFrame
+        JFrame game = new JFrame("Game");
+        game.setVisible(true);
+        game.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        //game.setSize(816,816);
 
-        JPanel pp = new JPanel();
-        pp.setLayout(new GridLayout(5,5,10,10));
-        pp.setComponentOrientation(ComponentOrientation.LEFT_TO_RIGHT);
+
+        //On initialise le plateau
+        JPanel plateau = new JPanel();
+        plateau.setLayout(new GridLayout(5,5));
+        plateau.setComponentOrientation(ComponentOrientation.LEFT_TO_RIGHT);
         for (int i = 0; i < boardGraph.length; i++){
             for (int j = 0; j < boardGraph[0].length; j++){
-                pp.add(boardGraph[i][j]);
+                plateau.add(boardGraph[i][j]);
+                plateau.setBorder(BorderFactory.createLineBorder(Color.BLACK,3));
             }
         }
-        plateau.add(pp);
-        plateau.pack();
-    }
 
-    public void test(){
+        //On initialise la toolBar
+        JToolBar toolBar = new JToolBar();
 
-        JFrame plateau = new JFrame("Board");
-        plateau.setVisible(true);
-        plateau.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        plateau.setLocationRelativeTo(null);
+        JButton start = new JButton("Start Game"); //Ce bouton doit print le board initial
+        JButton whoIsJack = new JButton("Qui est Mr. Jack ?"); //Ce bouton initialise qui est Mr. Jack et le dis au joueur, et place la pile de alibi a droite dans cartes
 
-        JLabel l = new JLabel(new ImageIcon("image/void.png"));
-        JPanel pp = new JPanel();
-        pp.add(l);
-        plateau.add(pp);
-        plateau.pack();
+        toolBar.add(start);
+        toolBar.add(whoIsJack);
+
+        //on initialise les bails a droite du plateau, cad pioche alibi et actions possible
+        JPanel cartes = new JPanel();
+        cartes.setLayout(new GridLayout(2,1));
+        JButton piocheAlibi = new JButton(new ImageIcon("image/piocheAlibi.png")); //appuyer sur ce bouton pioche une carte alibi
+        //cartes.add(new JLabel(new ImageIcon("image/piocheAlibi.png")));
+        cartes.add(piocheAlibi);
+
+        //On initialise le panel avec 4 bouton
+        JPanel action = new JPanel();
+        action.setLayout(new GridLayout(4,1));
+        JButton action1 = new JButton("action1");
+        JButton action2 = new JButton("action2");
+        JButton action3 = new JButton("action3");
+        JButton action4 = new JButton("action4");
+        action.add(action1);    action.add(action2);    action.add(action3);    action.add(action4);
+
+        cartes.add(action);
+
+
+        //on initialise les bails a gauche du plateau
+        JPanel tourDeJeu = new JPanel();
+        tourDeJeu.setLayout(new GridLayout(9,1));
+        tourDeJeu.setPreferredSize(new Dimension(120,0));
+        JLabel carteJack = new JLabel(new ImageIcon("image/carteJAck.png"));
+        JLabel tour1 = new JLabel("tour1");
+        JLabel tour2 = new JLabel("tour2");
+        JLabel tour3 = new JLabel("tour3");
+        JLabel tour4 = new JLabel("tour4");
+        JLabel tour5 = new JLabel("tour5");
+        JLabel tour6 = new JLabel("tour6");
+        JLabel tour7 = new JLabel("tour7");
+        JLabel tour8 = new JLabel("tour8");
+
+        tourDeJeu.add(carteJack);
+        tourDeJeu.add(tour8);   tourDeJeu.add(tour7);   tourDeJeu.add(tour6);   tourDeJeu.add(tour5);
+        tourDeJeu.add(tour4);   tourDeJeu.add(tour3);   tourDeJeu.add(tour2);   tourDeJeu.add(tour1);
+        //rajouter les jetons avec les tour dessus a l'aide d'une methode
+
+
+
+        game.add(plateau);
+        game.add(toolBar, BorderLayout.NORTH);
+        game.add(cartes, BorderLayout.EAST);
+        game.add(tourDeJeu,BorderLayout.WEST);
+        game.setLocationRelativeTo(null);
+        game.pack();
     }
 
     public void débutPartie(){
-        //lance la game behind the scene, initialise le plateau, les joueurs, choisi Jack
+        //lance la game behind the scene, initialise le game, les joueurs, choisi Jack
         initialiseBoard();
 
         player.initialiseName();
@@ -210,26 +255,32 @@ public class MrJackPocket{
         for (int i = 0; i < 5; i++) {//ligne
             board[0][i] = district.baseDeDonnee[2][0]; //exception
             boardGraph[0][i] = new JLabel(board[0][i].getFaceSus());
+            boardGraph[0][i].setBorder(BorderFactory.createLineBorder(Color.BLACK,1));
             for (int j = 0; j < 5; j++) {//colone
                 if (j == 0 || j == 4) {
                     board[i][j] = district.baseDeDonnee[2][0]; //Vide
                     boardGraph[i][j] = new JLabel(board[i][j].getFaceSus());
+                    boardGraph[i][j].setBorder(BorderFactory.createLineBorder(Color.BLACK,1));
                 }
                 if (i == 0 || i == 4){
                     board[i][j] = district.baseDeDonnee[2][0];//Vide
                     boardGraph[i][j] = new JLabel(board[i][j].getFaceSus());
+                    boardGraph[i][j].setBorder(BorderFactory.createLineBorder(Color.BLACK,1));
                 }
             }
         }
         //board[0][0] = board[4][0] =board[0][4] = board[4][4] = null;
         board[1][0] = district.baseDeDonnee[1][0]; //Holmes
         boardGraph[1][0] = new JLabel(board[1][0].getFaceSus());
+        boardGraph[1][0].setBorder(BorderFactory.createLineBorder(Color.BLACK,1));
 
         board[1][4] = district.baseDeDonnee[1][1]; //Watson
         boardGraph[1][4] = new JLabel(board[1][4].getFaceSus());
+        boardGraph[1][4].setBorder(BorderFactory.createLineBorder(Color.BLACK,1));
 
         board[4][2] = district.baseDeDonnee[1][2]; //Toby
         boardGraph[4][2] = new JLabel(board[4][2].getFaceSus());
+        boardGraph[4][2].setBorder(BorderFactory.createLineBorder(Color.BLACK,1));
 
         //on schuffle cette liste pour que les districtes soient tjr à des positions différentes
         District[] perso = district.baseDeDonnee[0];
@@ -243,6 +294,7 @@ public class MrJackPocket{
             for (int j = 1; j < 4; j++) {
                 board[i][j] = perso[a];
                 boardGraph[i][j] = new JLabel(board[i][j].getFaceSus());
+                boardGraph[i][j].setBorder(BorderFactory.createLineBorder(Color.BLACK,1));
                 a = a+1; //passe au prochain perso
             }
         }

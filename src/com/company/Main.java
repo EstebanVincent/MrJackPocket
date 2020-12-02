@@ -30,15 +30,11 @@ public class Main {
         frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         frame.setLocationRelativeTo(null);
 
-
-
-
         JButton play = new JButton("Start");
         play.setSize(100, 100);
         play.isDefaultButton();
         play.setLayout(null);
         play.setVisible(true);
-
 
         JPanel p = new JPanel();
         p.setLayout(new BorderLayout());
