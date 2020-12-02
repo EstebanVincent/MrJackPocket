@@ -29,6 +29,7 @@ public class MrJackPocket{
 
     public void play(){//les actions possible ne d'updatesPas probleme d'opp
         débutPartie();
+        System.out.println(alibi.piocheAlibi[2].getNom()); //probleme avec les valeurs de Alibi
         //printBoard();
         printBoardGraph();
 /*
@@ -171,7 +172,7 @@ public class MrJackPocket{
         JToolBar toolBar = new JToolBar();
 
         JLabel oneUse = new JLabel("Set up : ");
-        JButton start = new JButton("Start Game"); //Ce bouton doit print le board initial
+        JButton whoIsWho = new JButton("Choix des roles random");
         JButton whoIsJack = new JButton("Qui est Mr. Jack ?"); //Ce bouton initialise qui est Mr. Jack et le dis au joueur, et place la pile de alibi a droite dans cartes
 
         JLabel eachRound = new JLabel("En fin de tour : ");
@@ -181,7 +182,7 @@ public class MrJackPocket{
         JButton win = new JButton("Win ?"); //appuyer si tu pense avoir gagner, l'ordi vérifie
 
         toolBar.add(oneUse);
-        toolBar.add(start);
+        toolBar.add(whoIsWho);
         toolBar.add(whoIsJack);
         toolBar.addSeparator(new Dimension(40,0));
 
@@ -229,31 +230,56 @@ public class MrJackPocket{
         tourDeJeu.add(tour4);   tourDeJeu.add(tour3);   tourDeJeu.add(tour2);   tourDeJeu.add(tour1);
         //rajouter les jetons avec les tour dessus a l'aide d'une methode
 
-        JLabel imgGarde = new JLabel(district.changeSize("image/garde.jpg",800,800)); //changer image de fond elle pue la merde
+        JLabel imgGarde = new JLabel(district.changeSize("image/garde.png",600,600)); //changer image de fond elle pue la merde niv résolution
         imgGarde.setLayout( new GridBagLayout() );
 
-        JButton debut = new JButton("Start Game");
-        debut.setPreferredSize(new Dimension(550, 100));
-        debut.setFont(debut.getFont().deriveFont(100f));
-        debut.setContentAreaFilled(false);//maybe ajouter une fleche qui s'ffiche qd tu le selectione
-        imgGarde.add(debut, new GridBagConstraints());
+        JButton start = new JButton("Start Game");
+        start.setPreferredSize(new Dimension(550, 100));
+        start.setFont(start.getFont().deriveFont(100f));
+        start.setContentAreaFilled(false);//maybe ajouter une fleche qui s'ffiche qd tu le selectione
+        imgGarde.add(start, new GridBagConstraints());
 
-        //JButton credit = new JButton("crédits");
-        //imgGarde.add(credit, new GridBagConstraints());
+        JButton credit = new JButton("crédits");
+        //imgGarde.add(credit);
 
-        frame.add(toolBar, BorderLayout.NORTH);
+
         frame.add(imgGarde);
         frame.pack();
         frame.setLocationRelativeTo(null); //centre la fenetre, tjr le metre en dernier sinon marche ap
 
-        debut.addActionListener(new ActionListener() {
+        start.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 frame.remove(imgGarde);
+                frame.add(toolBar, BorderLayout.NORTH);
                 frame.add(plateau, BorderLayout.CENTER);
                 frame.add(cartes, BorderLayout.EAST);
                 frame.add(tourDeJeu,BorderLayout.WEST);
-                toolBar.remove(start);
+                updateFrame();
+            }
+        });
+        whoIsJack.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                Alibi name = alibi.choixJack();
+                System.out.println("fuck u");
+                //toolBar.remove(oneUse);
+                toolBar.remove(whoIsJack);
+                updateFrame();
+            }
+        });
+        whoIsWho.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                Random rd = new Random();
+                boolean choix = rd.nextBoolean();
+                //faire un popup et demander au joueur de choisir 1 ou 2
+                if (choix){
+                    System.out.println("Player1 is Mr. Jack");
+                } else {
+                    System.out.println("Player2 is Mr. Jack");
+                }
+                toolBar.remove(whoIsWho);
                 updateFrame();
             }
         });
