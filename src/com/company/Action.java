@@ -114,7 +114,7 @@ public class Action {
     //pioche 1 carte alibi
     public void alibi(Alibi alibi){
         Alibi cartePioché = alibi.draw1Carte();
-        if (mrJackPocket.getCurrentPlayer().getName().equals("Enqueteur")){
+        if (mrJackPocket.getCurrentPlayer().getName().equals("Enquêteur")){
             System.out.println("Tu as pioché " + cartePioché.getNom());
 
             ArrayList<String> pioché = new ArrayList<>();
@@ -125,6 +125,7 @@ public class Action {
             System.out.println("Tu as pioché " + cartePioché.getNom());
             mrJackPocket.sabliers += cartePioché.getSablier();
             System.out.println("Tu as " + mrJackPocket.sabliers + " sablier");
+            mrJackPocket.printBoard();
         }
     }
 

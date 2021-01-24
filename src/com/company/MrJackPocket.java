@@ -212,7 +212,7 @@ public class MrJackPocket{
     }
 
     //affiche le plateau dans la console avec le nom du district, l'orientation du bout du "T" (0 = Nord, 1 = Est, 2 = Sud, 3 = Ouest) et si le suspect est visible (true, false)
-    private void printBoard(){
+    protected void printBoard(){
         final int lineLength = 16;
         for (int i = 0; i < 5; i++) {
             for (int j = 0; j < 5; j++) {
@@ -253,7 +253,6 @@ public class MrJackPocket{
         } else if (Objects.equals(actionChoisie, "getAlibi")){
             action.alibi(alibi);
             separation();
-            printBoard();
         } else if (Objects.equals(actionChoisie, "holmes")){
             action.deplacementDetective(district.getBaseDeDonnee()[1][0]);
             separation();
@@ -379,6 +378,7 @@ public class MrJackPocket{
                 }
             }
         }
+        printBoard();
 
     }
 
