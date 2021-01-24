@@ -1,11 +1,7 @@
 package com.company;
 
-import java.util.Arrays;
-import java.util.Objects;
-import java.util.Random;
-import java.util.Scanner;
-
-import static java.lang.Integer.valueOf;
+import java.lang.reflect.Array;
+import java.util.*;
 
 public class Action {
     //constructeur de création des jetons
@@ -84,13 +80,6 @@ public class Action {
         this.mrJackPocket = mrJackPocket;
     }
 
-    //permet de transferé la valeur des atributs de alibi a action
-    private Alibi alibi;
-    public Action(Alibi alibi) {
-        this.alibi = alibi;
-    }
-
-
     public void initialiseJetons(){ //FINI
         Action jeton1 = new Action(1, "getAlibi","holmes");
         Action jeton2 = new Action(2,"toby","watson");
@@ -151,14 +140,19 @@ public class Action {
         mrJackPocket.board[coordo1[0]][coordo1[1]].setOrientation(a);
     }
 
-    public void alibi(){ //pioche 1 carte alibi et fait l'action necessaire
+    public void alibi(Alibi alibi){ //pioche 1 carte alibi et fait l'action necessaire
         Alibi cartePioché = alibi.draw1Carte();
         if (mrJackPocket.currentPlayer.getName() == "Enqueteur"){
-            System.out.println(cartePioché.getNom());
+            System.out.println("Tu as pioché " + cartePioché.getNom());
+
+            ArrayList<String> pioché = new ArrayList<>();
+            pioché.add(cartePioché.getNom());
+            mrJackPocket.addInocent(pioché);
+
         } else if (mrJackPocket.currentPlayer.getName() == "Mr. Jack"){
-            System.out.println(cartePioché.getNom());
+            System.out.println("Tu as pioché " + cartePioché.getNom());
             alibi.updateAlibiJack(cartePioché);
-            System.out.println(alibi.nbSablierAlibi());
+            System.out.println("Tu as " + alibi.nbSablierAlibi() + " sablier");
         }
     }
 
@@ -216,19 +210,17 @@ public class Action {
     }
 
     public void printActionPossible(){ //print les actions possible au tour impair FINI
-        System.out.println();
-        for (int i = 0; i < actionsPossible.length-1; i++){
+        System.out.print("Actions possibles : ");
+        for (int i = 0; i < actionsPossible.length; i++){
             System.out.print(actionsPossible[i] + "\t");
         }
-        System.out.println(actionsPossible[actionsPossible.length-1]);
     }
 
     public void printActionPossibleRetournée(){ //print les actions possible au tour pair FINI
-        System.out.println();
-        for (int i = 0; i < actionsPossibleRetournée.length-1; i++){
+        System.out.print("Actions possibles : ");
+        for (int i = 0; i < actionsPossibleRetournée.length; i++){
             System.out.print(actionsPossibleRetournée[i] + "\t");
         }
-        System.out.println(actionsPossibleRetournée[actionsPossibleRetournée.length-1]);
     }
 
     public void updateActionPossible(String actionUtilisé){ //enleve l'action utilisé des actions possible au tour impair FINI

@@ -1,8 +1,8 @@
 package com.company;
 
 import javax.swing.*;
+import java.util.ArrayList;
 import java.util.Arrays;
-import static java.lang.Integer.*;
 import static java.lang.Math.abs;
 
 public class SuspectDistrict extends District{
@@ -74,17 +74,15 @@ public class SuspectDistrict extends District{
         return sortie;
     }
 
-//fini il me semble, test a faire
-    public String[] see(String coord0bservateur, int orientationRegard){ //renvoi en String[] qui tu vois
+
+    //fini et vérifié
+    public ArrayList<String> see(int[] observ, int orientationRegard){ //renvoi en String[] qui tu vois
         //N = 0, E = 1, S = 2, Ouest = 3
         //en entree les coordonnee en string ex : 12, 22, et dir du regard en int
-        String[] sortie = new String[0];
-        int[] observ = {Integer.valueOf(coord0bservateur.substring(0, 1)), Integer.valueOf(coord0bservateur.substring(1, 2))};
-
+        ArrayList<String> sortie = new ArrayList<>();
 
         boolean visionBloque = false;
         int[] move = new int[2];
-
 
         //on défini les movemments a faire sur les districts a partir de l'observateur
         if(orientationRegard == 0){
@@ -108,18 +106,15 @@ public class SuspectDistrict extends District{
             if(observé.getOrientation() == orientationRegard){ //on regarde le mur directement (dos du T)
                 visionBloque = true; //la boucle s'arete
             } else if (abs(observé.getOrientation()-orientationRegard) == 2) { //on regarde la base du T
-                if(faceVisible == 1){ //si face suspect
-                    sortie = Arrays.copyOf(sortie, sortie.length + 1);// on crée une copie qui écrase l'originale et qui est plus longue de 1 (append en python)
-                    sortie[sortie.length - 1] = observé.getNom(); //On rajoute le nom du personnage dans la case car il est visible
+                if(observé.getFaceVisible() == 1){ //si face suspect
+                    sortie.add(observé.getNom());
                 }
                 visionBloque = true; // la fin du T bloque la vision, la boucle s'arrête
-            } else if (observé.getNom() == "Joseph Lane" && faceVisible == 0){//exception si case coté vide car pas en forme de T mais X
+            } else if (observé.getNom() == "Joseph Lane" && observé.getFaceVisible() == 0){//exception si case coté vide car pas en forme de T mais X
                 i += 1;
             }  else { //on voit a travers le T
-                if(faceVisible == 1){//si face suspect
-                    sortie = Arrays.copyOf(sortie, sortie.length + 1); //append en python
-                    sortie[sortie.length - 1] = observé.getNom(); //On rajoute le nom du personnage dans la case car il est visible
-                    i += 1;
+                if(observé.getFaceVisible() == 1){//si face suspect
+                    sortie.add(observé.getNom());
                 }//si face vide
                 i += 1;
             }

@@ -1,11 +1,11 @@
 package com.company;
-import javafx.scene.control.ToolBar;
+
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.lang.reflect.Array;
 import java.util.*;
 import javax.swing.*;
-import javax.swing.plaf.nimbus.NimbusLookAndFeel;
 import java.awt.*;
 import java.util.List;
 
@@ -16,6 +16,7 @@ public class MrJackPocket{
     public int[] temps; //jeton temps double face 0 = tour et 1 = sablier
     public Player currentPlayer;
     public JLabel[][] boardGraph = new JLabel[5][5];
+    public ArrayList<String> innocent = new ArrayList<>();
 
 
     public MrJackPocket() {
@@ -29,16 +30,15 @@ public class MrJackPocket{
 
     public void play(){//les actions possible ne d'updatesPas probleme d'opp
         débutPartie();
-        System.out.println(alibi.piocheAlibi[2].getNom()); //probleme avec les valeurs de Alibi
-        //printBoard();
-        printBoardGraph();
-/*
-        for (int i = 1; i < 9; i++ ) {//i est le compteur de tour
+        printBoard();
 
-            if (i % 2 == 1){ // tour impair, enqueteurs commence
+        //printBoardGraph();
+        for (int i = 1; i < 9; i++ ) {//i est le compteur de tour
+            if (i % 2 == 1) { // tour impair, enqueteurs commence
                 switchPlayer();
 
                 action.initialisePossibleAction();
+
                 action.printActionPossible();
                 String act1 = action.chooseAction(); //ajouter un verif que c possible avec do while
                 joueAction(act1);
@@ -59,16 +59,12 @@ public class MrJackPocket{
 
                 switchPlayer();
                 action.printActionPossible();
-                String act4 = action.actionsPossible[0]; //ajouter un verif que c possible avec do while
-                //joueAction(act4);
+                String act4 = action.chooseAction(); //ajouter un verif que c possible avec do while
+                //String act4 = action.actionsPossible[0]; //ajouter un verif que c possible avec do while
+                joueAction(act4);
+                action.updateActionPossible(act4);
 
-                String[] retour = sus.see(district.baseDeDonnee[1][0]);
-
-                //nefonctionnePas
-                for (int k = 0; k < retour.length ; k++){
-                    System.out.println(retour[k]);
-                }
-
+                addInocent(seeTotal());
             } else { // tour pair Jack commence
 
                 switchPlayer();
@@ -92,22 +88,13 @@ public class MrJackPocket{
 
                 switchPlayer();
                 action.printActionPossibleRetournée();
-                String act4 = action.actionsPossibleRetournée[0]; //ajouter un verif que c possible avec do while
-                //joueAction(act4);
+                String act4 = action.chooseAction(); //ajouter un verif que c possible avec do while
+                joueAction(act4);
+                action.updateActionPossibleRetournée(act4);
+
+                addInocent(seeTotal());
             }
-
-
-
-
-
-
         }
-         */
-
-
-
-
-
     }
 
 
@@ -230,7 +217,7 @@ public class MrJackPocket{
         tourDeJeu.add(tour4);   tourDeJeu.add(tour3);   tourDeJeu.add(tour2);   tourDeJeu.add(tour1);
         //rajouter les jetons avec les tour dessus a l'aide d'une methode
 
-        JLabel imgGarde = new JLabel(district.changeSize("image/garde.png",600,600)); //changer image de fond elle pue la merde niv résolution
+        JLabel imgGarde = new JLabel(district.changeSize("image/garde_4x.png",600,600)); //changer image de fond elle pue la merde niv résolution
         imgGarde.setLayout( new GridBagLayout() );
 
         JButton start = new JButton("Start Game");
@@ -319,11 +306,8 @@ public class MrJackPocket{
         } else {
             setCurrentPlayer(player.players[1]);
         }
-        System.out.println("Au tour de " + currentPlayer.getName());
+        System.out.println("\n\tAu tour de " + currentPlayer.getName());
     }
-
-
-
 
     private void initialiseBoard(){ //fini
         district.setUp();
@@ -383,43 +367,82 @@ public class MrJackPocket{
     }
 
     private void printBoard(){// faire un truc graphique
+        final int lineLength = 16;
+
         for (int i = 0; i < 5; i++) {
             for (int j = 0; j < 5; j++) {
-                System.out.print(board[i][j].getNom() + " " +board[i][j].getOrientation() + "\t");
+                System.out.print(repeatChar(' ', lineLength - board[i][j].getNom().length()) + board[i][j].getNom() + " " +board[i][j].getOrientation());
+                //System.out.print(board[i][j].getNom() + " " +board[i][j].getOrientation() + "\t");
             }
             System.out.println();
         }
     }
 
+    public static String repeatChar(char repeatChar, int repeatTimes) {
+        String result = "";
+        for(int j = 0; j < repeatTimes; j++) {
+            result += repeatChar;
+        }
+        return result;
+    }
+
     public void joueAction(String actionChoisie){
         if (Objects.equals(actionChoisie, new String("rotation1")) || Objects.equals(actionChoisie, new String("rotation2"))){
             action.rotation();
+            System.out.println("\n------------------------------------------------------------------------------------------\n");
             printBoard();
         } else if (Objects.equals(actionChoisie, new String("échange"))){
             action.échange();
+            System.out.println("\n------------------------------------------------------------------------------------------\n");
             printBoard();
         } else if (Objects.equals(actionChoisie, new String("getAlibi"))){
-            action.alibi(); //alibi est null??
+            action.alibi(alibi);
+            System.out.println("\n------------------------------------------------------------------------------------------\n");
+            printBoard();
         } else if (Objects.equals(actionChoisie, new String("holmes"))){
             action.deplacementDetective(district.baseDeDonnee[1][0]);
+            System.out.println("\n------------------------------------------------------------------------------------------\n");
             printBoard();
         } else if (Objects.equals(actionChoisie, new String("watson"))){
             action.deplacementDetective(district.baseDeDonnee[1][1]);
+            System.out.println("\n------------------------------------------------------------------------------------------\n");
             printBoard();
         } else if (Objects.equals(actionChoisie, new String("toby"))){
             action.deplacementDetective(district.baseDeDonnee[1][2]);
+            System.out.println("\n------------------------------------------------------------------------------------------\n");
             printBoard();
         } else if (Objects.equals(actionChoisie, new String("joker"))){
-            System.out.println("Quel Detective veux-tu déplacer ?");
-            Scanner scanner = new Scanner(System.in);
-            String detective = scanner.nextLine();
-            if (Objects.equals(detective, new String("holmes"))){
-                action.deplacementDetective(district.baseDeDonnee[1][0],1);
-            } else if (Objects.equals(actionChoisie, new String("watson"))){
-                action.deplacementDetective(district.baseDeDonnee[1][1],1);
-            } else if (Objects.equals(actionChoisie, new String("toby"))){
-                action.deplacementDetective(district.baseDeDonnee[1][2],1);
+            if (currentPlayer == player.players[1]) { //si c'est l'enqueteur
+                System.out.println("Quel Detective veux-tu déplacer ?");
+                Scanner scannerD = new Scanner(System.in);
+                String detective = scannerD.nextLine();
+                if (Objects.equals(detective, new String("holmes"))) {
+                    action.deplacementDetective(district.baseDeDonnee[1][0], 1);
+                } else if (Objects.equals(actionChoisie, new String("watson"))) {
+                    action.deplacementDetective(district.baseDeDonnee[1][1], 1);
+                } else if (Objects.equals(actionChoisie, new String("toby"))) {
+                    action.deplacementDetective(district.baseDeDonnee[1][2], 1);
+                }
+            } else {
+                System.out.println("Veux tu déplacer un detective"); //repondre Y/N
+                Scanner scanner = new Scanner(System.in);
+                String rep = scanner.nextLine();
+                if (Objects.equals(rep, new String("Y"))) {
+                    System.out.println("Quel Detective veux-tu déplacer ?");
+                    Scanner scannerJ = new Scanner(System.in);
+                    String detective = scannerJ.nextLine();
+                    if (Objects.equals(detective, new String("holmes"))) {
+                        action.deplacementDetective(district.baseDeDonnee[1][0], 1);
+                    } else if (Objects.equals(actionChoisie, new String("watson"))) {
+                        action.deplacementDetective(district.baseDeDonnee[1][1], 1);
+                    } else if (Objects.equals(actionChoisie, new String("toby"))) {
+                        action.deplacementDetective(district.baseDeDonnee[1][2], 1);
+                    }
+                } else {
+                    //on fait rien
+                }
             }
+            System.out.println("\n------------------------------------------------------------------------------------------\n");
             printBoard();
         }
     }
@@ -435,6 +458,49 @@ public class MrJackPocket{
             }
         }
         return defaut;
+    }
+
+    public ArrayList<String> seeTotal(){
+        ArrayList<String> sortie = new ArrayList<>();
+        ArrayList<String> sH = sus.see(findPosition(district.baseDeDonnee[1][0]), regard(findPosition(district.baseDeDonnee[1][0])));
+        ArrayList<String> sW = sus.see(findPosition(district.baseDeDonnee[1][1]), regard(findPosition(district.baseDeDonnee[1][1])));
+        ArrayList<String> sT = sus.see(findPosition(district.baseDeDonnee[1][2]), regard(findPosition(district.baseDeDonnee[1][2])));
+
+        sortie.addAll(sH); //sortie add les dictricts que peux voir holmes
+
+        List<String> sWC = new ArrayList<>(sW);
+        sWC.removeAll(sortie);
+        sortie.addAll(sWC); //sortie add les dictricts que peux voir watson qui ne sont pas des doublons la liste de base
+
+        List<String> sTC = new ArrayList<>(sT);
+        sTC.removeAll(sortie);
+        sortie.addAll(sTC); //sortie add les dictricts que peux voir toby qui ne sont pas des doublons la liste de base
+
+        return sortie;
+    }
+
+    public int regard(int[] coord){
+        int regard;
+        if (coord[0] == 0) {//si il est sur ligne 0
+            regard = 2;
+        } else if (coord[1] == 0){//si sur colone 0
+            regard = 1;
+        } else if (coord[0] == 4){//si sur derniere ligne
+            regard = 0;
+        } else { //si sur derniere colone
+            regard = 3;
+        }
+        return regard;
+    }
+
+    public void addInocent(List<String> add){
+        List<String> copy = new ArrayList<>(add);
+        copy.removeAll(innocent);
+        innocent.addAll(copy);
+        System.out.println("Les innocents sont :");
+        for (int k = 0; k < innocent.size(); k++) {
+            System.out.print(innocent.get(k)+"\t, ");
+        }
     }
 
     public int win(){ //0 si personne gagne, 1 si MrJack gagne, 2 si detectives gagne, 3 si les 2 gagne

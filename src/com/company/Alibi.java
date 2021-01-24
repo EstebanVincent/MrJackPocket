@@ -12,15 +12,12 @@ public class Alibi {
     public Alibi[] piocheAlibi = new Alibi[9];
     public Alibi[] carteJack = new Alibi[1];
 
-    public Alibi(String alibi, int sablier) { //constructeur pour les cartes alibli
+    public Alibi(String nom, int sablier) { //constructeur pour les cartes alibli
         this.nom = nom;
         this.sablier = sablier;
     }
 
     public Alibi() {} //constructeur vide pour le début
-
-
-    Action action = new Action(this);
 
 
 
