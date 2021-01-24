@@ -59,7 +59,7 @@ public class District {
         Random random = new Random();
         int[] orienté = new int[9];
         for(int i = 0; i< 8; i++){
-            int rand = random.nextInt(3 - 0 + 1);
+            int rand = random.nextInt(3 + 1);
             orienté[i] = rand;
         }
 
@@ -81,7 +81,7 @@ public class District {
         //districts vide
         District Vide = new District("Vide");
 
-        District[][] bdd = new District[3][9];//on cree tablo de 3 lignes 9 colones
+        District[][] bdd = new District[3][9];//on cree tableau de 3 lignes 9 colones
 
         District[] perso = {Mme, SGT, JB, WG, Ms, Gs, Insp, JP, JL};
         District[] detect = {Holmes, Watson, Toby, Vide};

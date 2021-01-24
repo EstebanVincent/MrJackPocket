@@ -32,9 +32,6 @@ public class Alibi {
         return sablier;
     }
 
-    public Alibi[] getPiocheAlibi() {
-        return piocheAlibi;
-    }
 
     public void setPiocheAlibi(Alibi[] piocheAlibi) {
         this.piocheAlibi = piocheAlibi;
@@ -66,8 +63,8 @@ public class Alibi {
     // renvoi qui est mrJack et update la pioche
     public Alibi choixJack(){
         Random random = new Random();
-        int rand = random.nextInt(8 - 0 + 1);//int random entre 0 et 8
-        Alibi tempo = piocheAlibi[rand]; //valeur tempo car sinon indexOutofBounds avec update
+        int rand = random.nextInt(8 + 1);//int random entre 0 et 8
+        Alibi tempo = piocheAlibi[rand]; //valeur tempo car sinon indexOutOfBounds avec update
         updatePiocheAlibi(piocheAlibi[rand]);//la carte pioché n'est plus dans la pioche
         return tempo;
     }
@@ -75,7 +72,7 @@ public class Alibi {
     //return la carte pioché et update la pioche
     public Alibi draw1Carte(){
         Random random = new Random();
-        int rand = random.nextInt((piocheAlibi.length-1) - 0 + 1);//int random entre 0 et la longueur de piocheAlibi-1
+        int rand = random.nextInt((piocheAlibi.length-1) + 1);//int random entre 0 et la longueur de piocheAlibi-1
         updatePiocheAlibi(piocheAlibi[rand]);//la carte pioché n'est plus dans la pioche
         return piocheAlibi[rand];
     }
@@ -83,10 +80,10 @@ public class Alibi {
     //update la pioche en enlevant la carte indiquée
     public void updatePiocheAlibi(Alibi cartePioché){
         Alibi[] newPioche = new Alibi[0];
-        for(int i = 0; i < piocheAlibi.length; i++){
-            if(piocheAlibi[i] != cartePioché){
+        for (Alibi alibi : piocheAlibi) {
+            if (alibi != cartePioché) {
                 newPioche = Arrays.copyOf(newPioche, newPioche.length + 1);// append en python
-                newPioche[newPioche.length - 1] = piocheAlibi[i];
+                newPioche[newPioche.length - 1] = alibi;
             }
         }
         piocheAlibi = newPioche;

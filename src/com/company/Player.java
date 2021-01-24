@@ -1,30 +1,29 @@
 package com.company;
 
 public class Player {
+    //Attributs
     public String name;
     public Player[] players;
 
-    public String getName() {
-        return name;
-    }
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public void setPlayers(Player[] players) { this.players = players; }
-
+    //Constructeurs
     public Player(String name) {
         this.name = name;
     }
     public Player() { }
 
+    //Getters and Setters
+    public String getName() {
+        return name;
+    }
 
-    //MrJackPocket mrJackPocket = new MrJackPocket(this);
+    public void setPlayers(Player[] players) { this.players = players; }
 
+    //Méthode
 
-    public void initialiseName(){ //initialise les players
+    //initialise les players
+    public void initialiseName(){
         Player jack = new Player("Mr. Jack");
-        Player enqueteur = new Player("Enqueteur");
+        Player enqueteur = new Player("Enquêteur");
         setPlayers(new Player[]{jack, enqueteur});
     }
 

@@ -5,12 +5,8 @@ import static java.lang.Math.abs;
 
 public class SuspectDistrict extends District{
 
-    private SuspectDistrict(String nom, int orientation,  boolean faceVisible) {
-        super(nom, orientation, faceVisible);
-    }
-
     //permet de transférer la valeur des attributs de mrjackpocket à suspectDistrict
-    private MrJackPocket mrJackPocket;
+    private final MrJackPocket mrJackPocket;
     public SuspectDistrict(MrJackPocket mrJackPocket) {
         this.mrJackPocket = mrJackPocket;
     }
@@ -28,18 +24,14 @@ public class SuspectDistrict extends District{
         boolean visionBloque = false;
         int[] move = new int[2];
 
-        //on défini les mouvements a faire sur les districts a partir de l'observateur
+        //on défini les mouvements a faire sur les districts a partir de l'observateur, 0 0 par default
         if(orientationRegard == 0){
             move[0] = -1;
-            move[1] = 0;
         } else if (orientationRegard == 1){
-            move[0] = 0;
             move[1] = 1;
         } else if (orientationRegard == 2){
             move[0] = 1;
-            move[1] = 0;
         } else {
-            move[0] = 0;
             move[1] = -1;
         }
 
@@ -54,7 +46,7 @@ public class SuspectDistrict extends District{
                     sortie.add(observé.getNom());
                 }
                 visionBloque = true; // la fin du T bloque la vision, la boucle s'arrête
-            } else if (observé.getNom() == "Joseph Lane" && observé.getFaceVisible() == false){//exception si case coté vide car pas en forme de T mais X
+            } else if (observé.getNom().equals("Joseph Lane") && !observé.getFaceVisible()){//exception si case coté vide car pas en forme de T mais X
                 i += 1;
             }  else { //on voit a travers le T
                 if(observé.getFaceVisible()){//si face suspect
