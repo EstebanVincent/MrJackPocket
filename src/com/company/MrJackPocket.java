@@ -142,7 +142,6 @@ public class MrJackPocket{
         Alibi alibiJack = alibi.choixJack(); //alibiJack est la carte alibi de Jack, et la pioche est update
         sabliers += alibiJack.getSablier();
         setJack(alibiJack.getNom()); //jack est le nom en string de son perso
-        alibi.initialiseAlibiJack(alibiJack); //on initialise les carte alibi en possession de Jack
 
         action.initialiseJetons();
 
