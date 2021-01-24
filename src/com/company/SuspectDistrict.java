@@ -1,90 +1,34 @@
 package com.company;
 
-import javax.swing.*;
 import java.util.ArrayList;
-import java.util.Arrays;
 import static java.lang.Math.abs;
 
 public class SuspectDistrict extends District{
 
-    public SuspectDistrict(String nom, int orientation, int typeDistrict, boolean faceVisible, ImageIcon faceSus) {
-        super(nom, orientation, typeDistrict, faceVisible, faceSus);
+    private SuspectDistrict(String nom, int orientation,  boolean faceVisible) {
+        super(nom, orientation, faceVisible);
     }
 
-    public SuspectDistrict(){
-
-    }
-
-    //permet de transferé la valeur des atributs de mrjack a suspectDis
+    //permet de transférer la valeur des attributs de mrjackpocket à suspectDistrict
     private MrJackPocket mrJackPocket;
     public SuspectDistrict(MrJackPocket mrJackPocket) {
         this.mrJackPocket = mrJackPocket;
     }
 
 
-    public String[] see(District districtDetective){ //renvoi en String[] qui tu vois
-        int[] coord = mrJackPocket.findPosition(districtDetective);
-        int regard = districtDetective.getOrientation(); //N = 0, E = 1, S = 2, Ouest = 3
+    //Méthodes
 
-        String[] sortie = new String[0];
-
-
-        boolean visionBloque = false;
-        int[] move = new int[2];
-
-
-        //on défini les movemments a faire sur les districts a partir de l'observateur
-        if(regard == 0){
-            move[0] = -1;
-            move[1] = 0;
-        } else if (regard == 1){
-            move[0] = 0;
-            move[1] = 1;
-        } else if (regard == 2){
-            move[0] = 1;
-            move[1] = 0;
-        } else {
-            move[0] = 0;
-            move[1] = -1;
-        }
-
-        //partie principale de la fonction
-        int i = 1;
-        do {
-            District observé = mrJackPocket.board[coord[0]+move[0]*i][coord[1]+move[1]*i];//la case observé les *i pour passer a la case suivante si on vois au travers
-            if(observé.getOrientation() == regard){ //on regarde le mur directement (dos du T)
-                visionBloque = true; //la boucle s'arete
-            } else if (abs(observé.getOrientation()-regard) == 2) { //on regarde la base du T
-                if(faceVisible){ //si face suspect
-                    sortie = Arrays.copyOf(sortie, sortie.length + 1);// on crée une copie qui écrase l'originale et qui est plus longue de 1 (append en python)
-                    sortie[sortie.length - 1] = observé.getNom(); //On rajoute le nom du personnage dans la case car il est visible
-                }
-                visionBloque = true; // la fin du T bloque la vision, la boucle s'arrête
-            } else if (observé.getNom() == "Joseph Lane" && faceVisible == false){//exception si case coté vide car pas en forme de T mais X
-                i += 1;
-            }  else { //on voit a travers le T
-                if(faceVisible){//si face suspect
-                    sortie = Arrays.copyOf(sortie, sortie.length + 1); //append en python
-                    sortie[sortie.length - 1] = observé.getNom(); //On rajoute le nom du personnage dans la case car il est visible
-                    i += 1;
-                }//si face vide
-                i += 1;
-            }
-        } while(!visionBloque && i != 4); //cas i si on peut voir a travers le plateau complet afin que la boucle s'arete
-        return sortie;
-    }
-
-
-    //fini et vérifié
-    public ArrayList<String> see(int[] observ, int orientationRegard){ //renvoi en String[] qui tu vois
+    //demande les coordonnées du detective, l'orientation de son regard
+    //renvoi une liste de qui le detective vois
+    protected ArrayList<String> see(int[] observ, int orientationRegard){
         //N = 0, E = 1, S = 2, Ouest = 3
-        //en entree les coordonnee en string ex : 12, 22, et dir du regard en int
+        //en entree les coordonne en string ex : 12, 22, et dir du regard en int
         ArrayList<String> sortie = new ArrayList<>();
 
         boolean visionBloque = false;
         int[] move = new int[2];
 
-        //on défini les movemments a faire sur les districts a partir de l'observateur
+        //on défini les mouvements a faire sur les districts a partir de l'observateur
         if(orientationRegard == 0){
             move[0] = -1;
             move[1] = 0;
@@ -99,12 +43,12 @@ public class SuspectDistrict extends District{
             move[1] = -1;
         }
 
-        //partie principale de la fonction
+        //partie principale de la méthode
         int i = 1;
         do {
-            District observé = mrJackPocket.board[observ[0]+move[0]*i][observ[1]+move[1]*i];//la case observé les *i pour passer a la case suivante si on vois au travers
+            District observé = mrJackPocket.getBoard()[observ[0]+move[0]*i][observ[1]+move[1]*i];//la case observé, les *i sont pour passer à la case suivante si on vois au travers
             if(observé.getOrientation() == orientationRegard){ //on regarde le mur directement (dos du T)
-                visionBloque = true; //la boucle s'arete
+                visionBloque = true; //la boucle s'arrête
             } else if (abs(observé.getOrientation()-orientationRegard) == 2) { //on regarde la base du T
                 if(observé.getFaceVisible()){ //si face suspect
                     sortie.add(observé.getNom());
@@ -115,10 +59,10 @@ public class SuspectDistrict extends District{
             }  else { //on voit a travers le T
                 if(observé.getFaceVisible()){//si face suspect
                     sortie.add(observé.getNom());
-                }//si face vide
+                }
                 i += 1;
             }
-        } while(!visionBloque && i != 4); //cas i si on peut voir a travers le plateau complet afin que la boucle s'arete
+        } while(!visionBloque && i != 4); //le i est la si on peut voir a travers le plateau complet afin que la boucle s'arrête
         return sortie;
     }
 }

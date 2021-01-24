@@ -1,43 +1,56 @@
 package com.company;
 
-
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.lang.reflect.Array;
 import java.util.*;
-import javax.swing.*;
-import java.awt.*;
 import java.util.List;
 
 public class MrJackPocket{
 
-    public District[][] board = new District[5][5]; //5 5 pour mettre les detectives
-    public int tour = 1;
-    public int[] temps; //jeton temps double face 0 = tour et 1 = sablier
-    public Player currentPlayer;
-    public JLabel[][] boardGraph = new JLabel[5][5];
+    //Attributs
+    private District[][] board = new District[5][5]; //5 5 pour mettre les detectives
+    private Player currentPlayer;
+    private String jack;
 
-    public String jack;
+    private ArrayList<String> innocent = new ArrayList<>();
+    private ArrayList<String> suspects = new ArrayList<>();
+    protected int sabliers = 0;
 
-    public ArrayList<String> innocent = new ArrayList<>();
-    public ArrayList<String> suspects = new ArrayList<>();
+    //Getters and Setters
 
-    public MrJackPocket() {
 
+    public District[][] getBoard() {
+        return board;
     }
 
+    public Player getCurrentPlayer() {
+        return currentPlayer;
+    }
+
+    public void setCurrentPlayer(Player currentPlayer) {
+        this.currentPlayer = currentPlayer;
+    }
+
+    public void setJack(String jack) {
+        this.jack = jack;
+    }
+
+
+    //nouvelles instances de classes
     Action action = new Action(this);
-    SuspectDistrict sus = new SuspectDistrict(this); //permet de transferé la valeur des atributs de mrjack a suspectDis
+    SuspectDistrict sus = new SuspectDistrict(this); //permet de transférer la valeur des attributs de mrjackpocket a suspectDistrict
     Player player = new Player();
     Alibi alibi = new Alibi();
+    District district = new District();
 
-    public void play(){//les actions possible ne d'updatesPas probleme d'opp
+    //Méthodes
+
+    //méthode principale appelée par le main
+    public void play(){
         débutPartie();
+        clearConsole();
         printBoard();
 
-        //printBoardGraph();
         for (int i = 1; i < 9; i++ ) {//i est le compteur de tour
-            if (i % 2 == 1) { // tour impair, enqueteurs commence
+            if (i % 2 == 1) { // tour impair, enquêteur commence
                 switchPlayer();
 
                 action.initialisePossibleAction();
@@ -63,22 +76,22 @@ public class MrJackPocket{
                 switchPlayer();
                 action.printActionPossible();
                 String act4 = action.chooseAction(); //ajouter un verif que c possible avec do while
-                //String act4 = action.actionsPossible[0]; //ajouter un verif que c possible avec do while
                 joueAction(act4);
                 action.updateActionPossible(act4);
 
                 suspects.addAll(seeTotal());
                 if (suspects.contains(jack)){
-                    addInocent(notSuspect());
+                    addInnocent(notSuspect());
 
                 } else {
-                    addInocent(suspects);
-                    //on lui ajoute un sablier
+                    addInnocent(suspects);
+                    sabliers += 1;
                 }
+                end(i);
                 suspects.clear();
 
             } else { // tour pair Jack commence
-
+                System.out.println();
                 switchPlayer();
                 action.printActionPossibleRetournée();
                 String act1 = action.chooseAction(); //ajouter un verif que c possible avec do while
@@ -104,199 +117,22 @@ public class MrJackPocket{
                 joueAction(act4);
                 action.updateActionPossibleRetournée(act4);
 
-                addInocent(seeTotal());
-            }
-        }
-    }
+                suspects.addAll(seeTotal());
+                if (suspects.contains(jack)){
+                    addInnocent(notSuspect());
 
-
-
-
-
-
-
-
-
-    public District[][] getBoard() {
-        return board;
-    }
-
-    public void setBoard(District[][] board) {
-        this.board = board;
-    }
-
-    public int getTour() {
-        return tour;
-    }
-
-    public void setTour(int tour) {
-        this.tour = tour;
-    }
-
-    public int[] getTemps() {
-        return temps;
-    }
-
-    public void setTemps(int[] temps) {
-        this.temps = temps;
-    }
-
-    public Player getCurrentPlayer() { return currentPlayer; }
-
-    public void setCurrentPlayer(Player currentPlayer) { this.currentPlayer = currentPlayer; }
-
-    District district = new District();
-
-    JFrame frame = new JFrame("Mr Jack Pocket");
-    public void printBoardGraph() {
-
-        //on initialise la JFrame
-        frame.setVisible(true);
-        frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        //game.setSize(816,816);
-
-
-        //On initialise le plateau
-        JPanel plateau = new JPanel();
-        plateau.setLayout(new GridLayout(5,5));
-        plateau.setComponentOrientation(ComponentOrientation.LEFT_TO_RIGHT);
-        for (int i = 0; i < boardGraph.length; i++){
-            for (int j = 0; j < boardGraph[0].length; j++){
-                plateau.add(boardGraph[i][j]);
-                plateau.setBorder(BorderFactory.createLineBorder(Color.BLACK,3));
-            }
-        }
-
-        //On initialise la toolBar
-        JToolBar toolBar = new JToolBar();
-
-        JLabel oneUse = new JLabel("Set up : ");
-        JButton whoIsWho = new JButton("Choix des roles random");
-        JButton whoIsJack = new JButton("Qui est Mr. Jack ?"); //Ce bouton initialise qui est Mr. Jack et le dis au joueur, et place la pile de alibi a droite dans cartes
-
-        JLabel eachRound = new JLabel("En fin de tour : ");
-        JButton temoin = new JButton("Appel a témoin"); //Ce bouton demande au joueur si Mr. Jack est visible
-
-        JLabel fin = new JLabel("En fin de partie : ");
-        JButton win = new JButton("Win ?"); //appuyer si tu pense avoir gagner, l'ordi vérifie
-
-        toolBar.add(oneUse);
-        toolBar.add(whoIsWho);
-        toolBar.add(whoIsJack);
-        toolBar.addSeparator(new Dimension(40,0));
-
-        toolBar.add(eachRound);
-        toolBar.add(temoin);
-        toolBar.addSeparator(new Dimension(40,0));
-
-        toolBar.add(fin);
-        toolBar.add(win);
-
-        //on initialise les bails a droite du plateau, cad pioche alibi et actions possible
-        JPanel cartes = new JPanel();
-        cartes.setLayout(new GridLayout(2,1));
-        JButton piocheAlibi = new JButton(new ImageIcon("image/piocheAlibi.png")); //appuyer sur ce bouton pioche une carte alibi
-        cartes.add(piocheAlibi);
-
-        //On initialise le panel avec 4 bouton
-        JPanel action = new JPanel();
-        action.setLayout(new GridLayout(4,1));
-        JButton action1 = new JButton("action1");
-        JButton action2 = new JButton("action2");
-        JButton action3 = new JButton("action3");
-        JButton action4 = new JButton("action4");
-        action.add(action1);    action.add(action2);    action.add(action3);    action.add(action4);
-
-        cartes.add(action);
-
-
-        //on initialise les bails a gauche du plateau
-        JPanel tourDeJeu = new JPanel();
-        tourDeJeu.setLayout(new GridLayout(9,1));
-        tourDeJeu.setPreferredSize(new Dimension(120,0));
-        JLabel carteJack = new JLabel(new ImageIcon("image/carteJack.png"));
-        JLabel tour1 = new JLabel("tour1");
-        JLabel tour2 = new JLabel("tour2");
-        JLabel tour3 = new JLabel("tour3");
-        JLabel tour4 = new JLabel("tour4");
-        JLabel tour5 = new JLabel("tour5");
-        JLabel tour6 = new JLabel("tour6");
-        JLabel tour7 = new JLabel("tour7");
-        JLabel tour8 = new JLabel("tour8");
-
-        tourDeJeu.add(carteJack);
-        tourDeJeu.add(tour8);   tourDeJeu.add(tour7);   tourDeJeu.add(tour6);   tourDeJeu.add(tour5);
-        tourDeJeu.add(tour4);   tourDeJeu.add(tour3);   tourDeJeu.add(tour2);   tourDeJeu.add(tour1);
-        //rajouter les jetons avec les tour dessus a l'aide d'une methode
-
-        JLabel imgGarde = new JLabel(district.changeSize("image/garde_4x.png",600,600)); //changer image de fond elle pue la merde niv résolution
-        imgGarde.setLayout( new GridBagLayout() );
-
-        JButton start = new JButton("Start Game");
-        start.setPreferredSize(new Dimension(550, 100));
-        start.setFont(start.getFont().deriveFont(100f));
-        start.setContentAreaFilled(false);//maybe ajouter une fleche qui s'ffiche qd tu le selectione
-        imgGarde.add(start, new GridBagConstraints());
-
-        JButton credit = new JButton("crédits");
-        //imgGarde.add(credit);
-
-
-        frame.add(imgGarde);
-        frame.pack();
-        frame.setLocationRelativeTo(null); //centre la fenetre, tjr le metre en dernier sinon marche ap
-
-        start.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                frame.remove(imgGarde);
-                frame.add(toolBar, BorderLayout.NORTH);
-                frame.add(plateau, BorderLayout.CENTER);
-                frame.add(cartes, BorderLayout.EAST);
-                frame.add(tourDeJeu,BorderLayout.WEST);
-                updateFrame();
-            }
-        });
-        whoIsJack.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                Alibi name = alibi.choixJack();
-                System.out.println("fuck u");
-                //toolBar.remove(oneUse);
-                toolBar.remove(whoIsJack);
-                updateFrame();
-            }
-        });
-        whoIsWho.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                Random rd = new Random();
-                boolean choix = rd.nextBoolean();
-                //faire un popup et demander au joueur de choisir 1 ou 2
-                if (choix){
-                    System.out.println("Player1 is Mr. Jack");
                 } else {
-                    System.out.println("Player2 is Mr. Jack");
+                    addInnocent(suspects);
+                    sabliers += 1;
                 }
-                toolBar.remove(whoIsWho);
-                updateFrame();
+                end(i);
+                suspects.clear();
             }
-        });
-    }
-    public void transparent(JButton button){ //Rend le bouton transparent, on voit juste le text et la bordure
-        button.setContentAreaFilled(false);
-        button.setBorder(BorderFactory.createLineBorder(Color.BLACK,4));
+        }
     }
 
-    public void updateFrame(){
-        //les 3 autres lignes pour updates la frame
-        frame.pack();
-        frame.setLocationRelativeTo(null);
-        SwingUtilities.updateComponentTreeUI(frame);
-    }
-
-    public void débutPartie(){
-        //lance la game behind the scene, initialise le game, les joueurs, choisi Jack
+    //lance la game behind the scene, initialise le game, les joueurs, choisi Jack
+    private void débutPartie(){
         initialiseBoard();
 
         player.initialiseName();
@@ -304,60 +140,60 @@ public class MrJackPocket{
         alibi.initialisePiocheAlibi();//on crée la pioche
 
         Alibi alibiJack = alibi.choixJack(); //alibiJack est la carte alibi de Jack, et la pioche est update
-        jack = alibiJack.getNom(); //jack est le nom en string de son perso
+        sabliers += alibiJack.getSablier();
+        setJack(alibiJack.getNom()); //jack est le nom en string de son perso
         alibi.initialiseAlibiJack(alibiJack); //on initialise les carte alibi en possession de Jack
 
         action.initialiseJetons();
 
-
+        System.out.println("Mr. Jack est "+ jack);
+        pause();
     }
 
-    public void switchPlayer(){
+    //comme il n'y a pas de clear, on improvise
+    private final static void clearConsole() {
+        System.out.println("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n");
+    }
+
+    //change le currentPlayer
+    //si on passe a l'enquêteur, le précise
+    //si on passe a jack, le précise et donne le nombre de sablier
+    private void switchPlayer(){
         if (currentPlayer == player.players[1]){
             setCurrentPlayer(player.players[0]);
+            System.out.println("\n\tAu tour de " + currentPlayer.getName());
+            System.out.println("Tu as " + sabliers + " sabliers");
         } else {
             setCurrentPlayer(player.players[1]);
+            System.out.println("\n\tAu tour de " + currentPlayer.getName());
         }
-        System.out.println("\n\tAu tour de " + currentPlayer.getName());
+
     }
 
-    private void initialiseBoard(){ //fini
+    //initialise le plateau et toutes les variables
+    private void initialiseBoard(){
         district.setUp();
-
-
         //les cases exterieurs sont vides
         for (int i = 0; i < 5; i++) {//ligne
-            board[0][i] = district.baseDeDonnee[2][0]; //exception
-            boardGraph[0][i] = new JLabel(board[0][i].getFaceSus());
-            boardGraph[0][i].setBorder(BorderFactory.createLineBorder(Color.BLACK,1));
+            board[0][i] = district.getBaseDeDonnee()[2][0]; //exception
             for (int j = 0; j < 5; j++) {//colone
                 if (j == 0 || j == 4) {
-                    board[i][j] = district.baseDeDonnee[2][0]; //Vide
-                    boardGraph[i][j] = new JLabel(board[i][j].getFaceSus());
-                    boardGraph[i][j].setBorder(BorderFactory.createLineBorder(Color.BLACK,1));
+                    board[i][j] = district.getBaseDeDonnee()[2][0]; //Vide
                 }
                 if (i == 0 || i == 4){
-                    board[i][j] = district.baseDeDonnee[2][0];//Vide
-                    boardGraph[i][j] = new JLabel(board[i][j].getFaceSus());
-                    boardGraph[i][j].setBorder(BorderFactory.createLineBorder(Color.BLACK,1));
+                    board[i][j] = district.getBaseDeDonnee()[2][0];//Vide
                 }
             }
         }
         //board[0][0] = board[4][0] =board[0][4] = board[4][4] = null;
-        board[1][0] = district.baseDeDonnee[1][0]; //Holmes
-        boardGraph[1][0] = new JLabel(board[1][0].getFaceSus());
-        boardGraph[1][0].setBorder(BorderFactory.createLineBorder(Color.BLACK,1));
+        board[1][0] = district.getBaseDeDonnee()[1][0]; //Holmes
 
-        board[1][4] = district.baseDeDonnee[1][1]; //Watson
-        boardGraph[1][4] = new JLabel(board[1][4].getFaceSus());
-        boardGraph[1][4].setBorder(BorderFactory.createLineBorder(Color.BLACK,1));
+        board[1][4] = district.getBaseDeDonnee()[1][1]; //Watson
 
-        board[4][2] = district.baseDeDonnee[1][2]; //Toby
-        boardGraph[4][2] = new JLabel(board[4][2].getFaceSus());
-        boardGraph[4][2].setBorder(BorderFactory.createLineBorder(Color.BLACK,1));
+        board[4][2] = district.getBaseDeDonnee()[1][2]; //Toby
 
         //on schuffle cette liste pour que les districtes soient tjr à des positions différentes
-        District[] perso = district.baseDeDonnee[0];
+        District[] perso = district.getBaseDeDonnee()[0];
         List<District> list = Arrays.asList(perso);
         Collections.shuffle(list);
         list.toArray(perso);
@@ -367,8 +203,6 @@ public class MrJackPocket{
         for (int i = 1; i < 4; i++) {
             for (int j = 1; j < 4; j++) {
                 board[i][j] = perso[a];
-                boardGraph[i][j] = new JLabel(board[i][j].getFaceSus());
-                boardGraph[i][j].setBorder(BorderFactory.createLineBorder(Color.BLACK,1));
                 a = a+1; //passe au prochain perso
             }
         }
@@ -378,24 +212,26 @@ public class MrJackPocket{
         board[3][2].setOrientation(0);
     }
 
-    private void printBoard(){// faire un truc graphique
+    //affiche le plateau dans la console avec le nom du district, l'orientation du bout du "T" (0 = Nord, 1 = Est, 2 = Sud, 3 = Ouest) et si le suspect est visible (true, false)
+    private void printBoard(){
         final int lineLength = 16;
-
         for (int i = 0; i < 5; i++) {
             for (int j = 0; j < 5; j++) {
                 System.out.print(repeatChar(' ', lineLength - board[i][j].getNom().length()) + board[i][j].getNom() + " " +board[i][j].getOrientation()+ " ");
+                //permet de pas décaler le tableau
                 if (board[i][j].getFaceVisible()){
                     System.out.print(board[i][j].getFaceVisible() + " ");
                 } else {
                     System.out.print(board[i][j].getFaceVisible());
                 }
-                //System.out.print(board[i][j].getNom() + " " +board[i][j].getOrientation() + "\t");
             }
             System.out.println();
         }
     }
 
-    public static String repeatChar(char repeatChar, int repeatTimes) {
+    //entrer le char a répéter et le nombre de fois
+    //retourne un string du caractère répété n fois
+    private static String repeatChar(char repeatChar, int repeatTimes) {
         String result = "";
         for(int j = 0; j < repeatTimes; j++) {
             result += repeatChar;
@@ -403,71 +239,85 @@ public class MrJackPocket{
         return result;
     }
 
-    public void joueAction(String actionChoisie){
+    //sépare les cas en fonction du jeton action choisi
+    //appelle les méthodes de action
+    //affiche une ligne de tiret pour séparer les actions jouées avant d'afficher le plateau mis à jour
+    private void joueAction(String actionChoisie){
         if (Objects.equals(actionChoisie, new String("rotation1")) || Objects.equals(actionChoisie, new String("rotation2"))){
             action.rotation();
-            pause();
+            separation();
             printBoard();
         } else if (Objects.equals(actionChoisie, new String("échange"))){
             action.échange();
-            pause();
+            separation();
             printBoard();
         } else if (Objects.equals(actionChoisie, new String("getAlibi"))){
             action.alibi(alibi);
-            pause();
+            separation();
             printBoard();
         } else if (Objects.equals(actionChoisie, new String("holmes"))){
-            action.deplacementDetective(district.baseDeDonnee[1][0]);
-            pause();
+            action.deplacementDetective(district.getBaseDeDonnee()[1][0]);
+            separation();
             printBoard();
         } else if (Objects.equals(actionChoisie, new String("watson"))){
-            action.deplacementDetective(district.baseDeDonnee[1][1]);
-            pause();
+            action.deplacementDetective(district.getBaseDeDonnee()[1][1]);
+            separation();
             printBoard();
         } else if (Objects.equals(actionChoisie, new String("toby"))){
-            action.deplacementDetective(district.baseDeDonnee[1][2]);
-            pause();
+            action.deplacementDetective(district.getBaseDeDonnee()[1][2]);
+            separation();
             printBoard();
         } else if (Objects.equals(actionChoisie, new String("joker"))){
-            if (currentPlayer == player.players[1]) { //si c'est l'enqueteur
-                System.out.println("Quel Detective veux-tu déplacer ?");
+            //ce cas est réaliser directement dans la méthode pour raison de facilité
+            if (currentPlayer == player.players[1]) { //si c'est le tour de l'enquêteur
+                System.out.println("Quel Detective veux-tu déplacer ?"); //repondre holmes, watson ou toby
                 Scanner scannerD = new Scanner(System.in);
                 String detective = scannerD.nextLine();
                 if (Objects.equals(detective, new String("holmes"))) {
-                    action.deplacementDetective(district.baseDeDonnee[1][0], 1);
+                    action.deplacementDetective(district.getBaseDeDonnee()[1][0], 1);
                 } else if (Objects.equals(actionChoisie, new String("watson"))) {
-                    action.deplacementDetective(district.baseDeDonnee[1][1], 1);
+                    action.deplacementDetective(district.getBaseDeDonnee()[1][1], 1);
                 } else if (Objects.equals(actionChoisie, new String("toby"))) {
-                    action.deplacementDetective(district.baseDeDonnee[1][2], 1);
+                    action.deplacementDetective(district.getBaseDeDonnee()[1][2], 1);
                 }
-            } else {
+            } else { //si c'est le tour de Jack
                 System.out.println("Veux tu déplacer un detective"); //repondre Y/N
                 Scanner scanner = new Scanner(System.in);
                 String rep = scanner.nextLine();
                 if (Objects.equals(rep, new String("Y"))) {
-                    System.out.println("Quel Detective veux-tu déplacer ?");
+                    System.out.println("Quel Detective veux-tu déplacer ?"); //repondre holmes, watson ou toby
                     Scanner scannerJ = new Scanner(System.in);
                     String detective = scannerJ.nextLine();
                     if (Objects.equals(detective, new String("holmes"))) {
-                        action.deplacementDetective(district.baseDeDonnee[1][0], 1);
+                        action.deplacementDetective(district.getBaseDeDonnee()[1][0], 1);
                     } else if (Objects.equals(actionChoisie, new String("watson"))) {
-                        action.deplacementDetective(district.baseDeDonnee[1][1], 1);
+                        action.deplacementDetective(district.getBaseDeDonnee()[1][1], 1);
                     } else if (Objects.equals(actionChoisie, new String("toby"))) {
-                        action.deplacementDetective(district.baseDeDonnee[1][2], 1);
+                        action.deplacementDetective(district.getBaseDeDonnee()[1][2], 1);
                     }
-                } else {
+                } else { //si a repondu N
                     //on fait rien
                 }
             }
-            pause();
+            separation();
             printBoard();
         }
     }
-    public void pause(){
+
+    //affiche une ligne de tiret
+    private final static void separation(){
         System.out.println("\n-----------------------------------------------------------------------------------------------------------------------\n");
     }
 
-    public int[] findPosition(District district){
+    //pause le programme pour 3s
+    private final static void pause(){
+        try {
+            Thread.sleep(3000);
+        } catch (InterruptedException ie) { }
+    }
+
+    //trouve la position d'un district dans le plateau
+    protected int[] findPosition(District district){
         int[] defaut = {0,0};
         for (int i = 0; i< board.length; i++){
             for (int j = 0; j< board.length; j++){
@@ -480,11 +330,12 @@ public class MrJackPocket{
         return defaut;
     }
 
-    public ArrayList<String> seeTotal(){
+    //trouve les suspects visibles par les 3 enquêteurs
+    private ArrayList<String> seeTotal(){
         ArrayList<String> sortie = new ArrayList<>();
-        ArrayList<String> sH = sus.see(findPosition(district.baseDeDonnee[1][0]), regard(findPosition(district.baseDeDonnee[1][0])));
-        ArrayList<String> sW = sus.see(findPosition(district.baseDeDonnee[1][1]), regard(findPosition(district.baseDeDonnee[1][1])));
-        ArrayList<String> sT = sus.see(findPosition(district.baseDeDonnee[1][2]), regard(findPosition(district.baseDeDonnee[1][2])));
+        ArrayList<String> sH = sus.see(findPosition(district.getBaseDeDonnee()[1][0]), regard(findPosition(district.getBaseDeDonnee()[1][0])));
+        ArrayList<String> sW = sus.see(findPosition(district.getBaseDeDonnee()[1][1]), regard(findPosition(district.getBaseDeDonnee()[1][1])));
+        ArrayList<String> sT = sus.see(findPosition(district.getBaseDeDonnee()[1][2]), regard(findPosition(district.getBaseDeDonnee()[1][2])));
 
         sortie.addAll(sH); //sortie add les dictricts que peux voir holmes
 
@@ -499,7 +350,8 @@ public class MrJackPocket{
         return sortie;
     }
 
-    public int regard(int[] coord){
+    //défini ou regarde un enquêteur en fonction de ses coordonnées
+    private int regard(int[] coord){
         int regard;
         if (coord[0] == 0) {//si il est sur ligne 0
             regard = 2;
@@ -513,11 +365,14 @@ public class MrJackPocket{
         return regard;
     }
 
-    public void addInocent(List<String> add){
+    //ajoute la liste donnée aux innocents sans les doublons
+    //affiche la liste des innocents
+    //retourne les districts des innocents
+    protected void addInnocent(List<String> add){
         List<String> copy = new ArrayList<>(add);
         copy.removeAll(innocent);
         innocent.addAll(copy);
-        System.out.println("Les innocents sont :");
+        System.out.println("\nLes innocents sont :");
         for (int k = 0; k < innocent.size(); k++) {
             System.out.print(innocent.get(k)+"\t, ");
             //on retourne les innocents
@@ -532,40 +387,95 @@ public class MrJackPocket{
 
     }
 
-    public ArrayList<String> notSuspect(){
+    //retourne une liste de noms des districts non visibles par les enquêteurs
+    private ArrayList<String> notSuspect(){
         ArrayList<String> notSuspect = new ArrayList<>();
-        for (int i = 0; i < district.baseDeDonnee[0].length;i++){
-            if (!suspects.contains(district.baseDeDonnee[0][i].getNom())){
-                notSuspect.add(district.baseDeDonnee[0][i].getNom());
+        for (int i = 0; i < district.getBaseDeDonnee()[0].length;i++){
+            if (!suspects.contains(district.getBaseDeDonnee()[0][i].getNom())){
+                notSuspect.add(district.getBaseDeDonnee()[0][i].getNom());
             }
         }
         return notSuspect;
     }
 
-    public int win(){ //0 si personne gagne, 1 si MrJack gagne, 2 si detectives gagne, 3 si les 2 gagne
-        boolean jack = plus6Sablier();
-        boolean det =  only1Suspect();
-        if (jack != det){
-            if (jack){
+    //return 0 si personne gagne, 1 si MrJack gagne, 2 si detectives gagne, 3 si les 2 gagne
+    private int win(){
+        boolean winJack = plus6Sablier();
+        boolean winDetective =  only1Suspect();
+        if (winJack != winDetective){
+            if (winJack){
                 return 1;
             } else {
                 return 2;
             }
-        } else if (!jack){ //si les 2 sont false
+        } else if (!winJack){ //si les 2 sont false
             return 0;
         } else { //si les 2 true, donc cas particulier
             return 3;
         }
     }
 
-    public boolean appelATemoin(){ //true si jack visible, false sinon
-        return false;
+    //demande le tour
+    //si il y a un vainqueur, l'affiche et stop le programme
+    private void end(int turn){
+        int winner = win();
+
+        if (winner == 0){
+            if (turn == 8){
+                clearConsole();
+                System.out.println("Mr. Jack gagne");
+                System.exit(0);
+            }
+        }
+
+        else if (winner == 1){
+            clearConsole();
+            System.out.println("Mr. Jack gagne");
+            System.exit(0);
+        }
+
+        else if(winner == 2){
+            clearConsole();
+            System.out.println("L'enquêteur gagne");
+            System.exit(0);
+        }
+
+        else if (winner == 3){
+            if (turn == 8){
+                if (suspects.contains(jack)){
+                    clearConsole();
+                    System.out.println("L'enquêteur gagne");
+                    System.exit(0);
+                } else {
+                    clearConsole();
+                    System.out.println("Mr. Jack gagne");
+                    System.exit(0);
+                }
+            } else {
+                if (suspects.contains(jack)){
+                    clearConsole();
+                    System.out.println("L'enquêteur gagne");
+                    System.exit(0);
+                }
+            }
+        }
     }
 
-    public boolean plus6Sablier(){ //dit true si oui
-        return false;
+    //return true si Jack a plus de 6 sabliers
+    private boolean plus6Sablier(){
+        if (sabliers > 5){
+            return true;
+        } else {
+            return false;
+        }
     }
-    public boolean only1Suspect(){ //dit true si oui
-        return false;
+
+    //return true si l'enquêteur a plus que 1 suspect
+    private boolean only1Suspect(){
+        if (innocent.size() == 8){
+            return true;
+        } else {
+            return false;
+        }
     }
 }

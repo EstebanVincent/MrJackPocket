@@ -103,10 +103,10 @@ public class Action {
         coordo2 = new int[]{Integer.valueOf(districtChoisie2.substring(0, 1)), Integer.valueOf(districtChoisie2.substring(1, 2))};
 
 
-        District tempo = mrJackPocket.board[coordo1[0]][coordo1[1]];
+        District tempo = mrJackPocket.getBoard()[coordo1[0]][coordo1[1]];
 
-        mrJackPocket.board[coordo1[0]][coordo1[1]] = mrJackPocket.board[coordo2[0]][coordo2[1]];
-        mrJackPocket.board[coordo2[0]][coordo2[1]] = tempo;
+        mrJackPocket.getBoard()[coordo1[0]][coordo1[1]] = mrJackPocket.getBoard()[coordo2[0]][coordo2[1]];
+        mrJackPocket.getBoard()[coordo2[0]][coordo2[1]] = tempo;
     }
 
     public void rotation(){//rotate un district FINI
@@ -137,22 +137,22 @@ public class Action {
             default:
                 a = 4;
         }
-        mrJackPocket.board[coordo1[0]][coordo1[1]].setOrientation(a);
+        mrJackPocket.getBoard()[coordo1[0]][coordo1[1]].setOrientation(a);
     }
 
     public void alibi(Alibi alibi){ //pioche 1 carte alibi et fait l'action necessaire
         Alibi cartePioché = alibi.draw1Carte();
-        if (mrJackPocket.currentPlayer.getName() == "Enqueteur"){
+        if (mrJackPocket.getCurrentPlayer().getName() == "Enqueteur"){
             System.out.println("Tu as pioché " + cartePioché.getNom());
 
             ArrayList<String> pioché = new ArrayList<>();
             pioché.add(cartePioché.getNom());
-            mrJackPocket.addInocent(pioché);
+            mrJackPocket.addInnocent(pioché);
 
-        } else if (mrJackPocket.currentPlayer.getName() == "Mr. Jack"){
+        } else if (mrJackPocket.getCurrentPlayer().getName() == "Mr. Jack"){
             System.out.println("Tu as pioché " + cartePioché.getNom());
-            alibi.updateAlibiJack(cartePioché);
-            System.out.println("Tu as " + alibi.nbSablierAlibi() + " sablier");
+            mrJackPocket.sabliers += cartePioché.getSablier();
+            System.out.println("Tu as " + mrJackPocket.sabliers + " sablier");
         }
     }
 
@@ -168,10 +168,11 @@ public class Action {
         for (int i = 0; i < positionDetectiveList.length; i++ ) {
             if (positionDetectiveList[i][0] == oldCoordDetective[0] && positionDetectiveList[i][1] == oldCoordDetective[1]){
                 newCoordDetective = positionDetectiveList[i + a];
+                break;
             }
         }
-        mrJackPocket.board[oldCoordDetective[0]][oldCoordDetective[1]] = mrJackPocket.board[0][0];
-        mrJackPocket.board[newCoordDetective[0]][newCoordDetective[1]] = detective;
+        mrJackPocket.getBoard()[oldCoordDetective[0]][oldCoordDetective[1]] = mrJackPocket.getBoard()[0][0];
+        mrJackPocket.getBoard()[newCoordDetective[0]][newCoordDetective[1]] = detective;
     }
 
     public void deplacementDetective(District detective, int a){
@@ -182,10 +183,11 @@ public class Action {
         for (int i = 0; i < positionDetectiveList.length; i++ ) {
             if (positionDetectiveList[i][0] == oldCoordDetective[0] && positionDetectiveList[i][1] == oldCoordDetective[1]){
                 newCoordDetective = positionDetectiveList[i + a];
+                break;
             }
         }
-        mrJackPocket.board[oldCoordDetective[0]][oldCoordDetective[1]] = mrJackPocket.board[0][0];
-        mrJackPocket.board[newCoordDetective[0]][newCoordDetective[1]] = detective;
+        mrJackPocket.getBoard()[oldCoordDetective[0]][oldCoordDetective[1]] = mrJackPocket.getBoard()[0][0];
+        mrJackPocket.getBoard()[newCoordDetective[0]][newCoordDetective[1]] = detective;
     }
 
     public void initialisePossibleAction(){// initialise les action possible aux 2 prochains tours FINI

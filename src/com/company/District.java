@@ -1,38 +1,32 @@
 package com.company;
 
-import javax.swing.*;
-import java.awt.*;
+
 import java.util.*;
 
-public class District { //nom en foction du perso dessus
-    public String nom;
-    public boolean faceVisible; //1 face suspect 0 face vide
-    public int orientation; //N = 0, E = 1, S = 2, Ouest = 3, c'est le bout du T dans cette direction
-    public int typeDistrict; //0 case vide, 1 case suspect, 2 case detective
-    public ImageIcon faceSus;
-    public ImageIcon faceVide;
+public class District {
 
-    //creer un dico avec en clee face visible et obj picture? ou juste on rajoute au constructeur les 2 icons
+    //Attributs
+    private String nom;
+    private boolean faceVisible; //1 face suspect 0 face vide
+    private int orientation; //N = 0, E = 1, S = 2, Ouest = 3, c'est le bout du T dans cette direction
 
-    public District[][] baseDeDonnee; //ne pas modifier !!!!!!!!!!
 
-    public District(String nom, int orientation, int typeDistrict,boolean faceVisible, ImageIcon faceSus) {
+    private District[][] baseDeDonnee;
+
+    //Constructeurs
+    public District(){}
+
+    public District(String nom, int orientation, boolean faceVisible) {
         this.nom = nom;
         this.orientation = orientation;
-        this.typeDistrict = typeDistrict;
         this.faceVisible = faceVisible;
-        this.faceSus = faceSus;
     }
 
-    public ImageIcon getFaceSus() {
-        return faceSus;
+    public District(String nom) {
+        this.nom = nom;
     }
 
-    public void setFaceSus(ImageIcon faceSus) {
-        this.faceSus = faceSus;
-    }
-
-    public District(){ }
+    //Getters and Setters
 
     public District[][] getBaseDeDonnee() { return baseDeDonnee; }
 
@@ -54,28 +48,14 @@ public class District { //nom en foction du perso dessus
         this.orientation = orientation;
     }
 
-    public int getTypeDistrict() {
-        return typeDistrict;
-    }
-
-    public void setTypeDistrict(int typeDistrict) {
-        this.typeDistrict = typeDistrict;
-    }
-
     public String getNom() { return nom; }
 
-    public void setNom(String nom) { this.nom = nom; }
 
-    public ImageIcon changeSize(String picture, int width, int height){
-        ImageIcon imageIcon = new ImageIcon(picture); // load the image to a imageIcon
-        Image image = imageIcon.getImage(); // transform it
-        Image newimg = image.getScaledInstance(width, height,  java.awt.Image.SCALE_SMOOTH); // scale it the smooth way
-        imageIcon = new ImageIcon(newimg);  // transform it back
-        return imageIcon;
-    }
+    //Méthode
 
+    //créer une base de données qui contient tout les éléments du plateau
     public void setUp(){
-        //on creer une liste random pour avoir des orientations de carte random
+        //on créer une liste random pour avoir des orientations de carte random
         Random random = new Random();
         int[] orienté = new int[9];
         for(int i = 0; i< 8; i++){
@@ -83,27 +63,26 @@ public class District { //nom en foction du perso dessus
             orienté[i] = rand;
         }
 
-        District Mme = new District("Madame",orienté[0],1,true,changeSize("image/faceSus/Madame.png",160,160));
-        District SGT = new District("SGT Goodley",orienté[1],1,true, changeSize("image/faceSus/Sgt._Goodley.png",160,160));
-        District JB = new District("Jeremy Bert",orienté[2],1,true, changeSize("image/faceSus/Jeremy_Bert.png",160,160));
-        District WG = new District("William Gull",orienté[3],1,true, changeSize("image/faceSus/William_Gull.png",160,160));
-        District Ms = new District("Miss Stealthy",orienté[4],1,true, changeSize("image/faceSus/Miss_Stealthy.png",160,160));
-        District Gs = new District("John Smith",orienté[5],1,true, changeSize("image/faceSus/John_Smith.png",160,160));
-        District Insp = new District("Insp. Lestrade",orienté[6],1,true, changeSize("image/faceSus/Insp._Lestrade.png",160,160));
-        District JP = new District("John Pizer",orienté[7],1,true, changeSize("image/faceSus/John_Pizer.png",160,160));
-        District JL = new District("Joseph Lane",orienté[8],1,true, changeSize("image/faceSus/Joseph_Lane.png",160,160)); // spécial si retournéé croix preciser dans suspect district
+        District Mme = new District("Madame",orienté[0],true);
+        District SGT = new District("SGT Goodley",orienté[1],true);
+        District JB = new District("Jeremy Bert",orienté[2],true);
+        District WG = new District("William Gull",orienté[3],true);
+        District Ms = new District("Miss Stealthy",orienté[4],true);
+        District Gs = new District("John Smith",orienté[5],true);
+        District Insp = new District("Insp. Lestrade",orienté[6],true);
+        District JP = new District("John Pizer",orienté[7],true);
+        District JL = new District("Joseph Lane",orienté[8],true);
 
-        //des district speciaux avec les inspecteurs dessus, regles diff
-        District Holmes = new District("Holmes",1,2,true,changeSize("image/detective/holmes.png",160,160));
-        District Watson = new District("Watson",1,2,true,changeSize("image/detective/watson.png",160,160));
-        District Toby = new District("Toby",1,2,true,changeSize("image/detective/toby.png",160,160));
+        //des district spéciaux avec les inspecteurs dessus
+        District Holmes = new District("Holmes");
+        District Watson = new District("Watson");
+        District Toby = new District("Toby");
 
-        //districtes juste case ou y'as rien
-        District Vide = new District("Vide",1,0,true,changeSize("image/void.png",160,160));
+        //districts vide
+        District Vide = new District("Vide");
 
         District[][] bdd = new District[3][9];//on cree tablo de 3 lignes 9 colones
 
-        //on schuffle cette liste pour que les districtes soient tjr à des positions différentes
         District[] perso = {Mme, SGT, JB, WG, Ms, Gs, Insp, JP, JL};
         District[] detect = {Holmes, Watson, Toby, Vide};
 
@@ -116,7 +95,7 @@ public class District { //nom en foction du perso dessus
                     a = a+1; //passe au prochain perso
                 } else if(i == 1) {
                     bdd[i][j] = detect[j];
-                    a = a+1; //passe au prochain detect
+                    a = a+1; //passe au prochain detective
                     if(a == 3){ //on a assigné les détectives, le reste reste null
                         break;
                     }

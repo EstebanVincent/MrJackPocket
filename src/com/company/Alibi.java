@@ -6,35 +6,30 @@ import java.util.List;
 import java.util.Random;
 
 public class Alibi {
-    public String nom; //j'ai changer en String c'est mieux avec des nom pour les cartes
-    public int sablier; //0 à 2
 
-    public Alibi[] piocheAlibi = new Alibi[9];
-    public Alibi[] carteJack = new Alibi[1];
+    //Attributs
+    private String nom;
+    private int sablier; //0 à 2
 
-    public Alibi(String nom, int sablier) { //constructeur pour les cartes alibli
+    private Alibi[] piocheAlibi = new Alibi[9];
+
+    //Constructeurs
+    public Alibi(String nom, int sablier) { //constructeur pour les cartes alibi
         this.nom = nom;
         this.sablier = sablier;
     }
 
     public Alibi() {} //constructeur vide pour le début
 
-
+    //Getters and Setters
 
     public String getNom() {
         return nom;
     }
 
-    public void setNom(String alibi) {
-        this.nom = alibi;
-    }
 
     public int getSablier() {
         return sablier;
-    }
-
-    public void setSablier(int sablier) {
-        this.sablier = sablier;
     }
 
     public Alibi[] getPiocheAlibi() {
@@ -45,15 +40,11 @@ public class Alibi {
         this.piocheAlibi = piocheAlibi;
     }
 
-    public Alibi[] getCarteJack() {
-        return carteJack;
-    }
 
-    public void setCarteJack(Alibi[] carteJack) {
-        this.carteJack = carteJack;
-    }
+    //Méthodes
 
-    public void initialisePiocheAlibi(){ //crée la pioche
+    //créer la pioche aléatoire
+    public void initialisePiocheAlibi(){
         Alibi Mme = new Alibi("Madame",2);
         Alibi SGT = new Alibi("SGT Goodley",0);
         Alibi JB = new Alibi("Jeremy Bert",1);
@@ -64,33 +55,33 @@ public class Alibi {
         Alibi JP = new Alibi("John Piser",1);
         Alibi JL = new Alibi("Joseph Lane",1);
 
-        piocheAlibi = new Alibi[] {Mme, SGT, JB, WG, Ms, JS, Insp, JP,JL};
+        setPiocheAlibi(new Alibi[] {Mme, SGT, JB, WG, Ms, JS, Insp, JP, JL});
 
-        //la pioche est diférente a chaque partie
+        //la pioche est différente a chaque partie
         List<Alibi> list = Arrays.asList(piocheAlibi);
         Collections.shuffle(list);
         list.toArray(piocheAlibi);
     }
 
-
-
-    public Alibi choixJack(){ // renvoi qui est mrJack et update la pioche
+    // renvoi qui est mrJack et update la pioche
+    public Alibi choixJack(){
         Random random = new Random();
         int rand = random.nextInt(8 - 0 + 1);//int random entre 0 et 8
-        Alibi tempo = piocheAlibi[rand]; //valeur tempo car sinon indexOutofBounds avec le update
+        Alibi tempo = piocheAlibi[rand]; //valeur tempo car sinon indexOutofBounds avec update
         updatePiocheAlibi(piocheAlibi[rand]);//la carte pioché n'est plus dans la pioche
         return tempo;
     }
 
-    public Alibi draw1Carte(){//return la carte pioché et update la pioche
+    //return la carte pioché et update la pioche
+    public Alibi draw1Carte(){
         Random random = new Random();
         int rand = random.nextInt((piocheAlibi.length-1) - 0 + 1);//int random entre 0 et la longueur de piocheAlibi-1
         updatePiocheAlibi(piocheAlibi[rand]);//la carte pioché n'est plus dans la pioche
         return piocheAlibi[rand];
-
     }
 
-    public void updatePiocheAlibi(Alibi cartePioché){ //update la pioche en enlevant la carte pioché
+    //update la pioche en enlevant la carte indiquée
+    public void updatePiocheAlibi(Alibi cartePioché){
         Alibi[] newPioche = new Alibi[0];
         for(int i = 0; i < piocheAlibi.length; i++){
             if(piocheAlibi[i] != cartePioché){
@@ -100,22 +91,4 @@ public class Alibi {
         }
         piocheAlibi = newPioche;
     }
-
-    public void initialiseAlibiJack(Alibi mrJack){//mettre en entré le jack optenu par choixJack
-        carteJack[0] = mrJack;
-    }
-
-    public void updateAlibiJack(Alibi cartePioché){ //ajoute les cartes pioché par Jack
-        carteJack = Arrays.copyOf(carteJack, carteJack.length + 1);// on crée une copie qui ecrase l'originale et qui est plus longue de 1 (append en python)
-        carteJack[carteJack.length - 1] = cartePioché; //On rajoute le nom du personnage dans la case car il est visible
-    }
-
-    public int nbSablierAlibi(){ //return le nb de sablier de Jack uniquement avec les cartes alibi
-        int a = 0;
-        for (int i = 0; i < carteJack.length; i++){
-            a += carteJack[0].sablier; //add le nb de sablier de la carte
-        }
-        return a;
-    }
-
 }
