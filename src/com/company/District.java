@@ -6,7 +6,7 @@ import java.util.*;
 
 public class District { //nom en foction du perso dessus
     public String nom;
-    public int faceVisible; //1 face suspect 0 face vide
+    public boolean faceVisible; //1 face suspect 0 face vide
     public int orientation; //N = 0, E = 1, S = 2, Ouest = 3, c'est le bout du T dans cette direction
     public int typeDistrict; //0 case vide, 1 case suspect, 2 case detective
     public ImageIcon faceSus;
@@ -16,7 +16,7 @@ public class District { //nom en foction du perso dessus
 
     public District[][] baseDeDonnee; //ne pas modifier !!!!!!!!!!
 
-    public District(String nom, int orientation, int typeDistrict,int faceVisible, ImageIcon faceSus) {
+    public District(String nom, int orientation, int typeDistrict,boolean faceVisible, ImageIcon faceSus) {
         this.nom = nom;
         this.orientation = orientation;
         this.typeDistrict = typeDistrict;
@@ -38,7 +38,7 @@ public class District { //nom en foction du perso dessus
 
     public void setBaseDeDonnee(District[][] baseDeDonnee) { this.baseDeDonnee = baseDeDonnee; }
 
-    public int getFaceVisible() {
+    public boolean getFaceVisible() {
         return faceVisible;
     }
 
@@ -46,7 +46,7 @@ public class District { //nom en foction du perso dessus
         return orientation;
     }
 
-    public void setFaceVisible(int faceVisible) {
+    public void setFaceVisible(boolean faceVisible) {
         this.faceVisible = faceVisible;
     }
 
@@ -83,23 +83,23 @@ public class District { //nom en foction du perso dessus
             orienté[i] = rand;
         }
 
-        District Mme = new District("Madame",orienté[0],1,1,changeSize("image/faceSus/Madame.png",160,160));
-        District SGT = new District("SGT Goodley",orienté[1],1,1, changeSize("image/faceSus/Sgt._Goodley.png",160,160));
-        District JB = new District("Jeremy Bert",orienté[2],1,1, changeSize("image/faceSus/Jeremy_Bert.png",160,160));
-        District WG = new District("William Gull",orienté[3],1,1, changeSize("image/faceSus/William_Gull.png",160,160));
-        District Ms = new District("Miss Stealthy",orienté[4],1,1, changeSize("image/faceSus/Miss_Stealthy.png",160,160));
-        District Gs = new District("John Smith",orienté[5],1,1, changeSize("image/faceSus/John_Smith.png",160,160));
-        District Insp = new District("Insp. Lestrade",orienté[6],1,1, changeSize("image/faceSus/Insp._Lestrade.png",160,160));
-        District JP = new District("John Pizer",orienté[7],1,1, changeSize("image/faceSus/John_Pizer.png",160,160));
-        District JL = new District("Joseph Lane",orienté[8],1,1, changeSize("image/faceSus/Joseph_Lane.png",160,160)); // spécial si retournéé croix preciser dans suspect district
+        District Mme = new District("Madame",orienté[0],1,true,changeSize("image/faceSus/Madame.png",160,160));
+        District SGT = new District("SGT Goodley",orienté[1],1,true, changeSize("image/faceSus/Sgt._Goodley.png",160,160));
+        District JB = new District("Jeremy Bert",orienté[2],1,true, changeSize("image/faceSus/Jeremy_Bert.png",160,160));
+        District WG = new District("William Gull",orienté[3],1,true, changeSize("image/faceSus/William_Gull.png",160,160));
+        District Ms = new District("Miss Stealthy",orienté[4],1,true, changeSize("image/faceSus/Miss_Stealthy.png",160,160));
+        District Gs = new District("John Smith",orienté[5],1,true, changeSize("image/faceSus/John_Smith.png",160,160));
+        District Insp = new District("Insp. Lestrade",orienté[6],1,true, changeSize("image/faceSus/Insp._Lestrade.png",160,160));
+        District JP = new District("John Pizer",orienté[7],1,true, changeSize("image/faceSus/John_Pizer.png",160,160));
+        District JL = new District("Joseph Lane",orienté[8],1,true, changeSize("image/faceSus/Joseph_Lane.png",160,160)); // spécial si retournéé croix preciser dans suspect district
 
         //des district speciaux avec les inspecteurs dessus, regles diff
-        District Holmes = new District("Holmes",1,2,1,changeSize("image/detective/holmes.png",160,160));
-        District Watson = new District("Watson",1,2,1,changeSize("image/detective/watson.png",160,160));
-        District Toby = new District("Toby",1,2,1,changeSize("image/detective/toby.png",160,160));
+        District Holmes = new District("Holmes",1,2,true,changeSize("image/detective/holmes.png",160,160));
+        District Watson = new District("Watson",1,2,true,changeSize("image/detective/watson.png",160,160));
+        District Toby = new District("Toby",1,2,true,changeSize("image/detective/toby.png",160,160));
 
         //districtes juste case ou y'as rien
-        District Vide = new District("Vide",1,0,1,changeSize("image/void.png",160,160));
+        District Vide = new District("Vide",1,0,true,changeSize("image/void.png",160,160));
 
         District[][] bdd = new District[3][9];//on cree tablo de 3 lignes 9 colones
 

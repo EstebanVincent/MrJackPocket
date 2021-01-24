@@ -7,7 +7,7 @@ import static java.lang.Math.abs;
 
 public class SuspectDistrict extends District{
 
-    public SuspectDistrict(String nom, int orientation, int typeDistrict, int faceVisible, ImageIcon faceSus) {
+    public SuspectDistrict(String nom, int orientation, int typeDistrict, boolean faceVisible, ImageIcon faceSus) {
         super(nom, orientation, typeDistrict, faceVisible, faceSus);
     }
 
@@ -55,15 +55,15 @@ public class SuspectDistrict extends District{
             if(observé.getOrientation() == regard){ //on regarde le mur directement (dos du T)
                 visionBloque = true; //la boucle s'arete
             } else if (abs(observé.getOrientation()-regard) == 2) { //on regarde la base du T
-                if(faceVisible == 1){ //si face suspect
+                if(faceVisible){ //si face suspect
                     sortie = Arrays.copyOf(sortie, sortie.length + 1);// on crée une copie qui écrase l'originale et qui est plus longue de 1 (append en python)
                     sortie[sortie.length - 1] = observé.getNom(); //On rajoute le nom du personnage dans la case car il est visible
                 }
                 visionBloque = true; // la fin du T bloque la vision, la boucle s'arrête
-            } else if (observé.getNom() == "Joseph Lane" && faceVisible == 0){//exception si case coté vide car pas en forme de T mais X
+            } else if (observé.getNom() == "Joseph Lane" && faceVisible == false){//exception si case coté vide car pas en forme de T mais X
                 i += 1;
             }  else { //on voit a travers le T
-                if(faceVisible == 1){//si face suspect
+                if(faceVisible){//si face suspect
                     sortie = Arrays.copyOf(sortie, sortie.length + 1); //append en python
                     sortie[sortie.length - 1] = observé.getNom(); //On rajoute le nom du personnage dans la case car il est visible
                     i += 1;
@@ -106,14 +106,14 @@ public class SuspectDistrict extends District{
             if(observé.getOrientation() == orientationRegard){ //on regarde le mur directement (dos du T)
                 visionBloque = true; //la boucle s'arete
             } else if (abs(observé.getOrientation()-orientationRegard) == 2) { //on regarde la base du T
-                if(observé.getFaceVisible() == 1){ //si face suspect
+                if(observé.getFaceVisible()){ //si face suspect
                     sortie.add(observé.getNom());
                 }
                 visionBloque = true; // la fin du T bloque la vision, la boucle s'arrête
-            } else if (observé.getNom() == "Joseph Lane" && observé.getFaceVisible() == 0){//exception si case coté vide car pas en forme de T mais X
+            } else if (observé.getNom() == "Joseph Lane" && observé.getFaceVisible() == false){//exception si case coté vide car pas en forme de T mais X
                 i += 1;
             }  else { //on voit a travers le T
-                if(observé.getFaceVisible() == 1){//si face suspect
+                if(observé.getFaceVisible()){//si face suspect
                     sortie.add(observé.getNom());
                 }//si face vide
                 i += 1;

@@ -16,8 +16,11 @@ public class MrJackPocket{
     public int[] temps; //jeton temps double face 0 = tour et 1 = sablier
     public Player currentPlayer;
     public JLabel[][] boardGraph = new JLabel[5][5];
-    public ArrayList<String> innocent = new ArrayList<>();
 
+    public String jack;
+
+    public ArrayList<String> innocent = new ArrayList<>();
+    public ArrayList<String> suspects = new ArrayList<>();
 
     public MrJackPocket() {
 
@@ -64,7 +67,16 @@ public class MrJackPocket{
                 joueAction(act4);
                 action.updateActionPossible(act4);
 
-                addInocent(seeTotal());
+                suspects.addAll(seeTotal());
+                if (suspects.contains(jack)){
+                    addInocent(notSuspect());
+
+                } else {
+                    addInocent(suspects);
+                    //on lui ajoute un sablier
+                }
+                suspects.clear();
+
             } else { // tour pair Jack commence
 
                 switchPlayer();
@@ -292,7 +304,7 @@ public class MrJackPocket{
         alibi.initialisePiocheAlibi();//on crée la pioche
 
         Alibi alibiJack = alibi.choixJack(); //alibiJack est la carte alibi de Jack, et la pioche est update
-        String jack = alibiJack.getNom(); //jack est le nom en string de son perso
+        jack = alibiJack.getNom(); //jack est le nom en string de son perso
         alibi.initialiseAlibiJack(alibiJack); //on initialise les carte alibi en possession de Jack
 
         action.initialiseJetons();
@@ -371,7 +383,12 @@ public class MrJackPocket{
 
         for (int i = 0; i < 5; i++) {
             for (int j = 0; j < 5; j++) {
-                System.out.print(repeatChar(' ', lineLength - board[i][j].getNom().length()) + board[i][j].getNom() + " " +board[i][j].getOrientation());
+                System.out.print(repeatChar(' ', lineLength - board[i][j].getNom().length()) + board[i][j].getNom() + " " +board[i][j].getOrientation()+ " ");
+                if (board[i][j].getFaceVisible()){
+                    System.out.print(board[i][j].getFaceVisible() + " ");
+                } else {
+                    System.out.print(board[i][j].getFaceVisible());
+                }
                 //System.out.print(board[i][j].getNom() + " " +board[i][j].getOrientation() + "\t");
             }
             System.out.println();
@@ -389,27 +406,27 @@ public class MrJackPocket{
     public void joueAction(String actionChoisie){
         if (Objects.equals(actionChoisie, new String("rotation1")) || Objects.equals(actionChoisie, new String("rotation2"))){
             action.rotation();
-            System.out.println("\n------------------------------------------------------------------------------------------\n");
+            pause();
             printBoard();
         } else if (Objects.equals(actionChoisie, new String("échange"))){
             action.échange();
-            System.out.println("\n------------------------------------------------------------------------------------------\n");
+            pause();
             printBoard();
         } else if (Objects.equals(actionChoisie, new String("getAlibi"))){
             action.alibi(alibi);
-            System.out.println("\n------------------------------------------------------------------------------------------\n");
+            pause();
             printBoard();
         } else if (Objects.equals(actionChoisie, new String("holmes"))){
             action.deplacementDetective(district.baseDeDonnee[1][0]);
-            System.out.println("\n------------------------------------------------------------------------------------------\n");
+            pause();
             printBoard();
         } else if (Objects.equals(actionChoisie, new String("watson"))){
             action.deplacementDetective(district.baseDeDonnee[1][1]);
-            System.out.println("\n------------------------------------------------------------------------------------------\n");
+            pause();
             printBoard();
         } else if (Objects.equals(actionChoisie, new String("toby"))){
             action.deplacementDetective(district.baseDeDonnee[1][2]);
-            System.out.println("\n------------------------------------------------------------------------------------------\n");
+            pause();
             printBoard();
         } else if (Objects.equals(actionChoisie, new String("joker"))){
             if (currentPlayer == player.players[1]) { //si c'est l'enqueteur
@@ -442,9 +459,12 @@ public class MrJackPocket{
                     //on fait rien
                 }
             }
-            System.out.println("\n------------------------------------------------------------------------------------------\n");
+            pause();
             printBoard();
         }
+    }
+    public void pause(){
+        System.out.println("\n-----------------------------------------------------------------------------------------------------------------------\n");
     }
 
     public int[] findPosition(District district){
@@ -500,7 +520,26 @@ public class MrJackPocket{
         System.out.println("Les innocents sont :");
         for (int k = 0; k < innocent.size(); k++) {
             System.out.print(innocent.get(k)+"\t, ");
+            //on retourne les innocents
+            for (int i = 1; i < board.length; i++){
+                for (int j = 1; j < board.length; j++){
+                    if (board[i][j].getNom().equals(innocent.get(k))){
+                        board[i][j].setFaceVisible(false);
+                    }
+                }
+            }
         }
+
+    }
+
+    public ArrayList<String> notSuspect(){
+        ArrayList<String> notSuspect = new ArrayList<>();
+        for (int i = 0; i < district.baseDeDonnee[0].length;i++){
+            if (!suspects.contains(district.baseDeDonnee[0][i].getNom())){
+                notSuspect.add(district.baseDeDonnee[0][i].getNom());
+            }
+        }
+        return notSuspect;
     }
 
     public int win(){ //0 si personne gagne, 1 si MrJack gagne, 2 si detectives gagne, 3 si les 2 gagne
