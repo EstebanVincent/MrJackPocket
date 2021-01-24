@@ -6,12 +6,12 @@ import java.util.List;
 public class MrJackPocket{
 
     //Attributs
-    private District[][] board = new District[5][5]; //5 5 pour mettre les detectives
+    private final District[][] board = new District[5][5]; //5 5 pour mettre les detectives
     private Player currentPlayer;
     private String jack;
 
-    private ArrayList<String> innocent = new ArrayList<>();
-    private ArrayList<String> suspects = new ArrayList<>();
+    private final ArrayList<String> innocent = new ArrayList<>();
+    private final ArrayList<String> suspects = new ArrayList<>();
     protected int sabliers = 0;
 
     //Getters and Setters
@@ -378,6 +378,8 @@ public class MrJackPocket{
                 }
             }
         }
+        System.out.print("\n");
+        separation();
         printBoard();
 
     }
