@@ -268,7 +268,7 @@ public class MrJackPocket{
         } else if (Objects.equals(actionChoisie, "joker")){
             //ce cas est réaliser directement dans la méthode pour raison de facilité
             if (currentPlayer == player.players[1]) { //si c'est le tour de l'enquêteur
-                System.out.println("Quel Detective veux-tu déplacer ?"); //répondre holmes, watson ou toby
+                System.out.println("Quel Detective veux-tu déplacer ? (holmes, watson ou toby)"); //répondre holmes, watson ou toby
                 Scanner scannerD = new Scanner(System.in);
                 String detective = scannerD.nextLine();
                 if (Objects.equals(detective, "holmes")) {
@@ -279,11 +279,11 @@ public class MrJackPocket{
                     action.deplacementDetective(district.getBaseDeDonnee()[1][2], 1);
                 }
             } else { //si c'est le tour de Jack
-                System.out.println("Veux tu déplacer un detective"); //répondre Y/N
+                System.out.println("Veux tu déplacer un detective (Y/N)"); //répondre Y/N
                 Scanner scanner = new Scanner(System.in);
                 String rep = scanner.nextLine();
                 if (Objects.equals(rep, "Y")) {
-                    System.out.println("Quel Detective veux-tu déplacer ?"); //répondre holmes, watson ou toby
+                    System.out.println("Quel Detective veux-tu déplacer ? (holmes, watson ou toby)"); //répondre holmes, watson ou toby
                     Scanner scannerJ = new Scanner(System.in);
                     String detective = scannerJ.nextLine();
                     if (Objects.equals(detective, "holmes")) {

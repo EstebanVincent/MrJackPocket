@@ -64,7 +64,7 @@ public class Action {
     public void échange(){
 
         Scanner scanner = new Scanner(System.in);
-        System.out.println("Quelles districts veux tu échanger? (donner ses coordonnées ex: 12)");//rentrer le premier enter puis le deuxième
+        System.out.println("Quelles districts veux tu échanger? (donner ses coordonnées ex: 12 enter 23)");//rentrer le premier enter puis le deuxième
         String districtChoisie1 = scanner.nextLine();
         int[] coordo1;
         coordo1 = new int[]{Integer.parseInt(districtChoisie1.substring(0, 1)), Integer.parseInt(districtChoisie1.substring(1, 2))};
@@ -134,7 +134,7 @@ public class Action {
         int[] oldCoordDetective;
         int[] newCoordDetective = new int[2];
         oldCoordDetective = mrJackPocket.findPosition(detective);
-        System.out.println("Veux-tu avancer de 1 ou 2 espaces dans le sens des aiguilles d'une montre ?"); // rentrer 1 ou 2
+        System.out.println("Veux-tu avancer de 1 ou 2 espaces dans le sens des aiguilles d'une montre ? (1 ou 2)"); // rentrer 1 ou 2
         Scanner scanner = new Scanner(System.in);
         String deplacement = scanner.nextLine();
         int a = Integer.parseInt(deplacement);
